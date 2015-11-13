@@ -5,7 +5,6 @@
 	"license": "MIT",
 	"type": "library",
 	"require": {
-		"neonbug/meexo": "*", 
 		"bkwld/croppa": "~4.0",
 		"flowjs/flow-php-server": "dev-master",
 		"google/apiclient": "^1.1"
