@@ -1,0 +1,1 @@
+{{ $formatter->formatShortDate(strtotime($item->$field_name)) }}

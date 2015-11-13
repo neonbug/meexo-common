@@ -1,0 +1,18 @@
+{
+	"name": "neonbug/meexo-common",
+	"description": "Common package for Meexo CMS",
+	"keywords": ["meexo", "cms", "laravel", "php"],
+	"license": "MIT",
+	"type": "library",
+	"require": {
+		"neonbug/meexo": "*", 
+		"bkwld/croppa": "~4.0",
+		"flowjs/flow-php-server": "dev-master",
+		"google/apiclient": "^1.1"
+	},
+	"autoload": {
+		"psr-4": {
+			"Neonbug\\Common\\": "src"
+		}
+	}
+}

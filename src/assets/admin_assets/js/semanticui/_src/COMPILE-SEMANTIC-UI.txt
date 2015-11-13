@@ -1,0 +1,4 @@
+1. Download Semantic UI code (changes were based on 2.1.4, but any 2.1.x or even 2.x should work)
+2. Unpack code into this directory
+3. Run gulp build
+4. Copy files from ./dist folder to ../, overwriting existing files
