@@ -5,6 +5,7 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
 
 use Illuminate\Contracts\View\Factory;
+use App;
 
 class CreatePackage extends Command {
 
@@ -13,29 +14,31 @@ class CreatePackage extends Command {
 	 *
 	 * @var string
 	 */
-	protected $name = 'make:neonbug-package';
+	protected $name = 'make:meexo-package';
 
 	/**
 	 * The console command description.
 	 *
 	 * @var string
 	 */
-	protected $description = 'Creates a Neonbug package';
+	protected $description = 'Create a Meexo package';
 	
 	protected $view_factory;
 	protected $neonbug_packages_path;
+	protected $app_packages_path;
 	
 	/**
 	 * Create a new command instance.
 	 *
 	 * @return void
 	 */
-	public function __construct(Factory $view_factory)
+	public function __construct(Factory $view_factory, App $app)
 	{
 		parent::__construct();
 		
-		$this->view_factory = $view_factory;
-		$this->neonbug_packages_path = __DIR__ . '/../../';
+		$this->view_factory          = $view_factory;
+		$this->neonbug_packages_path = $app::basePath() . '/neonbug/';
+		$this->app_packages_path     = $app::path() .     '/Packages/';
 	}
 
 	/**
@@ -52,9 +55,7 @@ class CreatePackage extends Command {
 			($this->choice('What type of package is this? Enter 0 or 1 [0]', ['app', 'neonbug'], '0') == 'neonbug');
 		
 		$neonbug_packages_path = $this->neonbug_packages_path;
-		$packages_path         = ($is_neonbug_package ? 
-			$this->neonbug_packages_path : 
-			$this->neonbug_packages_path . '../app/Packages/');
+		$packages_path         = ($is_neonbug_package ? $this->neonbug_packages_path : $this->app_packages_path);
 		$namespace             = ($is_neonbug_package ? 'Neonbug' : 'App\\Packages');
 		$config_root           = ($is_neonbug_package ? 'neonbug' : 'packages');
 		
