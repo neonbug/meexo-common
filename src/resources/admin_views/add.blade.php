@@ -6,7 +6,9 @@
 	var trans = {
 		errors: {
 			slug_empty: {!! json_encode(trans('common::admin.add.errors.slug-empty')) !!}, 
-			slug_already_exists: {!! json_encode(trans('common::admin.add.errors.slug-already-exists')) !!}
+			slug_already_exists: {!! json_encode(trans('common::admin.add.errors.slug-already-exists')) !!}, 
+			validation_required: {!! json_encode(trans('common::admin.add.errors.validation.required')) !!}, 
+			validation_number: {!! json_encode(trans('common::admin.add.errors.validation.number')) !!}
 		}
 	};
 	

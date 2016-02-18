@@ -32,6 +32,8 @@ return [
 		'en' => 'Already exists, choose another value', 
 		'sl' => 'Že obstaja, vpišite drugo vrednost'
 	], 
+	$p . 'add.errors.validation.required' => [ 'en' => 'Required',       'sl' => 'Obvezno' ], 
+	$p . 'add.errors.validation.number'   => [ 'en' => 'Enter a number', 'sl' => 'Vpišite številko' ], 
 	
 	$p . 'add.messages.deleted'          => [ 'en' => 'Deleted', 'sl' => 'Odstranjeno' ], 
 	
