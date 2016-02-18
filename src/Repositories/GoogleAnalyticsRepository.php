@@ -20,7 +20,7 @@ class GoogleAnalyticsRepository {
 			$key_file_location = $this->key_file_location;
 			
 			$client = new \Google_Client();
-			$client->setApplicationName("HelloAnalytics");
+			$client->setApplicationName("Meexo CMS");
 			$analytics = new \Google_Service_Analytics($client);
 			
 			$key = file_get_contents($key_file_location);
