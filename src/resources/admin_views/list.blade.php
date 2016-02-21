@@ -61,7 +61,8 @@
 						?>
 						<td class="{{ $cls }}">
 							@include('common_admin::list_fields.' . $field['type'], 
-								[ 'item' => $item, 'field_name' => $field_name, 'field' => $field ])
+								[ 'item' => $item, 'field_name' => $field_name, 'field' => $field, 
+									'route_prefix' => $route_prefix ])
 						</td>
 					@endforeach
 				</tr>

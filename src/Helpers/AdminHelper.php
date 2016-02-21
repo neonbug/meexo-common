@@ -158,7 +158,8 @@ class AdminHelper {
 			'items'        => $items, 
 			'fields'       => $fields, 
 			'edit_route'   => $prefix . '::admin::edit', 
-			'delete_route' => $prefix . '::admin::delete'
+			'delete_route' => $prefix . '::admin::delete', 
+			'route_prefix' => $prefix
 		];
 		
 		return App::make('\Neonbug\Common\Helpers\CommonHelper')

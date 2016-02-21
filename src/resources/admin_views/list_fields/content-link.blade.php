@@ -1,0 +1,1 @@
+<a href="{{ route($route_prefix . '::slug::' . $item->slug) }}">{{ trans('common::admin.list.content-link') }}</a>

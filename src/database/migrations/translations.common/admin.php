@@ -46,6 +46,7 @@ return [
 	], 
 	$p . 'list.delete-confirmation-confirm' => [ 'en' => 'Yes', 'sl' => 'Da' ], 
 	$p . 'list.delete-confirmation-deny'    => [ 'en' => 'No', 'sl' => 'Ne' ], 
+	$p . 'list.content-link'                => [ 'en' => 'link', 'sl' => 'povezava' ], 
 	
 	// menu
 	$p . 'menu.dashboard'      => [ 'en' => 'Dashboard', 'sl' => 'Nadzorna plošča' ], 
