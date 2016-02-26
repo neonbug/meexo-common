@@ -2,6 +2,7 @@
 return [
 	
 	'model' => '\{{ $namespace }}\{{ $package_name }}\Models\{{ $model_name }}', 
+	'supports_preview' => true, 
 	
 	'list' => [
 		'fields' => [
