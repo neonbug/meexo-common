@@ -237,6 +237,18 @@ class AdminHelper {
 		$allowed_lang_independent_fields = array_map($map, $language_independent_fields);
 		$allowed_lang_dependent_fields   = array_map($map, $language_dependent_fields);
 		
+		// nullify empty fields
+		foreach ($language_independent_fields as $field)
+		{
+			foreach ($fields[-1] as $field_name=>$field_value)
+			{
+				if ($field_value == '')
+				{
+					$fields[-1][$field_name] = null;
+				}
+			}
+		}
+		
 		// handle files
 		$file_fields = $this->handleFileUpload($fields, $files, $prefix);
 		
