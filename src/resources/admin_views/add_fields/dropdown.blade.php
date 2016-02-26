@@ -5,6 +5,9 @@
 	<td>
 		<div class="field">
 			<select class="ui search dropdown" name="field[{{ $id_language }}][{{ $field['name'] }}]">
+				@if (!array_key_exists('required', $field) || $field['required'] === false)
+					<option value="">{{ trans('common::admin.add.dropdown.empty-value') }}</option>
+				@endif
 				@foreach ($field['values'] as $key=>$title)
 					<option value="{{ $key }}" 
 						{{ array_key_exists('value', $field) && $key == $field['value'] ? 'selected' : '' }}>

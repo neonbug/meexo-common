@@ -37,6 +37,8 @@ return [
 	
 	$p . 'add.messages.deleted'          => [ 'en' => 'Deleted', 'sl' => 'Odstranjeno' ], 
 	
+	$p . 'add.dropdown.empty-value' => [ 'en' => '[empty]', 'sl' => '[prazno]' ], 
+	
 	// list
 	$p . 'list.edit-action'                 => [ 'en' => 'Edit', 'sl' => 'Uredi' ], 
 	$p . 'list.delete-action'               => [ 'en' => 'Delete', 'sl' => 'Odstrani' ], 
