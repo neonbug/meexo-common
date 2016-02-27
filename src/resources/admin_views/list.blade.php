@@ -21,6 +21,10 @@
 @stop
 
 @section('content')
+	<a href="{{ route($add_route) }}" class="ui large label grey">
+		<i class="plus icon"></i> {{ trans('menu::admin.title.add') }}
+	</a>
+	
 	<table class="ui striped padded table unstackable">
 		<thead>
 			<tr>
