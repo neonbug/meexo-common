@@ -166,6 +166,49 @@
 		}
 	}
 
+	function initValidation() {
+		$('.validation-required, .validation-int').change(function() {
+			validateItem($(this));
+		}).keyup(function() {
+			validateItem($(this));
+		});
+	}
+
+	function validateItem(item) {
+		var name        = item.attr('name');
+		var field       = $('.field[data-name="' + name + '"]');
+		var error_label = $('.error-label', field);
+		
+		var error = '';
+		if (item.hasClass('validation-required'))
+		{
+			var value = item.val();
+			if (value.length == 0)
+			{
+				error = app_data.trans.errors.validation_required;
+			}
+		}
+		
+		if (item.hasClass('validation-int') || item.hasClass('validation-float'))
+		{
+			var value = item.val();
+			if (value.length > 0 && isNaN(value))
+			{
+				error = app_data.trans.errors.validation_number;
+			}
+		}
+		
+		if (error == '')
+		{
+			field.removeClass('error');
+		}
+		else
+		{
+			field.addClass('error');
+			error_label.html(error);
+		}
+	}
+
 	function initSaveButton() {
 		$('form.add').submit(function(e) {
 			//if we're still loading stuff, don't continue
@@ -290,6 +333,7 @@
 		
 		$(document).ready(function() {
 			initSlugs();
+			initValidation();
 			initSaveButton();
 			initMessageClose();
 			initRichEditors();
