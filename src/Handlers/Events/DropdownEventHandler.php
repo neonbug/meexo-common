@@ -17,10 +17,13 @@ class DropdownEventHandler
 		$events->listen('Neonbug\\Common\\Events\\AdminAddEditPrepareField', function($event) {
 			if ($event->field['type'] != 'dropdown') return;
 			
-			if (!array_key_exists('values', $event->field) && //already has values
-				array_key_exists('from', $event->field) && 
+			if (array_key_exists('values', $event->field)) //static values
+			{
+				//do nothing, we already have the values
+			}
+			else if (array_key_exists('from', $event->field) && 
 				array_key_exists('value_field', $event->field) && 
-				array_key_exists('title_field', $event->field))
+				array_key_exists('title_field', $event->field)) //values from a model
 			{
 				$class = $event->field['from'];
 				if (array_key_exists($class, $this->cache))
@@ -44,6 +47,32 @@ class DropdownEventHandler
 				foreach ($items as $item)
 				{
 					$values[$item->{$value_field}] = $item->{$title_field};
+				}
+				
+				$event->field['values'] = $values;
+			}
+			else if (array_key_exists('repository', $event->field) && 
+				array_key_exists('method', $event->field)) //values from a repository
+			{
+				$repo_class =  $event->field['repository'];
+				$method = $event->field['method'];
+				$key = $repo_class . '::' . $method;
+				if (array_key_exists($key, $this->cache))
+				{
+					$values = $this->cache[$key];
+				}
+				else
+				{
+					$repo = App::make($repo_class);
+					$values = $repo->$method();
+					$this->cache[$key] = $values;
+				}
+				
+				//remove the value of the item we're currently editing
+				if (array_key_exists('skip_item_id', $event->field) && $event->field['skip_item_id'] === true && 
+					$event->item != null && array_key_exists($event->item->{$event->item->getKeyName()}, $values))
+				{
+					unset($values[$event->item->{$event->item->getKeyName()}]);
 				}
 				
 				$event->field['values'] = $values;
