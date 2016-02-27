@@ -9,16 +9,18 @@ class AdminAddEditPrepareField extends Event {
 	
 	public $type;
 	public $field;
+	public $item; //only when editing, not available in adding
 	
 	/**
 	 * Create a new event instance.
 	 *
 	 * @return void
 	 */
-	public function __construct($type, $field)
+	public function __construct($type, $field, $item)
 	{
 		$this->type = $type;
 		$this->field = $field;
+		$this->item = $item;
 	}
 	
 }
