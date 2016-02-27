@@ -157,6 +157,7 @@ class AdminHelper {
 			'title'        => $title, 
 			'items'        => $items, 
 			'fields'       => $fields, 
+			'add_route'    => $prefix . '::admin::add', 
 			'edit_route'   => $prefix . '::admin::edit', 
 			'delete_route' => $prefix . '::admin::delete', 
 			'route_prefix' => $prefix
