@@ -324,7 +324,9 @@
 	}
 
 	function initDropdowns() {
-		$('.ui.dropdown').dropdown();
+		$('.ui.dropdown').dropdown({
+			placeholder: false
+		});
 	}
 
 	module.exports.init = function(trans, config) {
