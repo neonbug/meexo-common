@@ -2803,7 +2803,7 @@ _.showFiles = function(callBack, selected) {
                 if (file.thumb)
                     icon = ".image";
                 else if (!icon.length || !file.smallIcon)
-                    icon = ".";
+                    icon = "default";
                 icon = "themes/" + _.theme + "/img/files/small/" + icon + ".png";
 
                 f = $('<tr class="file"><td class="name thumb"></td><td class="time"></td><td class="size"></td></tr>');
@@ -2817,8 +2817,8 @@ _.showFiles = function(callBack, selected) {
                     icon = _.uploadURL + "/" + _.dir + "/" + encodeURIComponent(file.name);
                     icon = $.$.escapeDirs(icon).replace(/\'/g, "%27");
                 } else {
-                    icon = file.bigIcon ? $.$.getFileExtension(file.name) : ".";
-                    if (!icon.length) icon = ".";
+                    icon = file.bigIcon ? $.$.getFileExtension(file.name) : "default";
+                    if (!icon.length) icon = "default";
                     icon = "themes/" + _.theme + "/img/files/big/" + icon + ".png";
                 }
                 f = $('<div class="file"><div class="thumb"></div><div class="name"></div><div class="time"></div><div class="size"></div></div>');
@@ -3679,7 +3679,7 @@ _.openClipboard = function() {
             if (val.thumb)
                 icon = ".image";
             else if (!val.smallIcon || !icon.length)
-                icon = ".";
+                icon = "default";
             icon = "themes/" + _.theme + "/img/files/small/" + icon + ".png";
             html += '<a title="' + _.label("Click to remove from the Clipboard") + '" onclick="_.removeFromClipboard(' + i + ')"' + ((i == 0) ? ' class="first"' : "") + '><span style="background-image:url(' + $.$.escapeDirs(icon) + ')">' + $.$.htmlData($.$.basename(val.name)) + '</span></a>';
         });

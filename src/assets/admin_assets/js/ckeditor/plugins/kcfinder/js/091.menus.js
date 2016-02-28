@@ -502,7 +502,7 @@ _.openClipboard = function() {
             if (val.thumb)
                 icon = ".image";
             else if (!val.smallIcon || !icon.length)
-                icon = ".";
+                icon = "default";
             icon = "themes/" + _.theme + "/img/files/small/" + icon + ".png";
             html += '<a title="' + _.label("Click to remove from the Clipboard") + '" onclick="_.removeFromClipboard(' + i + ')"' + ((i == 0) ? ' class="first"' : "") + '><span style="background-image:url(' + $.$.escapeDirs(icon) + ')">' + $.$.htmlData($.$.basename(val.name)) + '</span></a>';
         });
