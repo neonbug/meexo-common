@@ -199,6 +199,8 @@ function initRichEditors() {
 		:
 		'Print,Preview,Save,Templates,Find,Replace,SelectAll,Scayt,Form,Checkbox,Radio,TextField,Textarea,Select,Button,ImageButton,HiddenField,Language,BidiRtl,BidiLtr,About,Flash,NewPage';
 	
+	var file_browser_base_href = app_data.config.base_url + '/vendor/common/admin_assets/js/ckeditor/plugins/kcfinder/';
+	
 	$('textarea[data-type="rich_text"]').each(function(idx, el) {
 		CKEDITOR.replace(el, {
 			entities: false, 
@@ -219,7 +221,13 @@ function initRichEditors() {
 				{ name: 'others', groups: [ 'others' ] },
 				{ name: 'about', groups: [ 'about' ] }
 			], 
-			removeButtons: remove_buttons
+			removeButtons: remove_buttons, 
+			filebrowserBrowseUrl: file_browser_base_href + 'browse.php?opener=ckeditor&type=files', 
+			filebrowserImageBrowseUrl: file_browser_base_href + 'browse.php?opener=ckeditor&type=images', 
+			filebrowserFlashBrowseUrl: file_browser_base_href + 'browse.php?opener=ckeditor&type=flash', 
+			filebrowserUploadUrl: file_browser_base_href + 'upload.php?opener=ckeditor&type=files', 
+			filebrowserImageUploadUrl: file_browser_base_href + 'upload.php?opener=ckeditor&type=images', 
+			filebrowserFlashUploadUrl: file_browser_base_href + 'upload.php?opener=ckeditor&type=flash'
 		});
 	});
 }
