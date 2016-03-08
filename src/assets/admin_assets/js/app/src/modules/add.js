@@ -106,11 +106,18 @@ function markSlugField(slug_field, is_error) {
 	}
 }
 
+var validation_selector = '.validation-required, .validation-int';
 function initValidation() {
-	$('.validation-required, .validation-int').change(function() {
+	$(validation_selector).change(function() {
 		validateItem($(this));
 	}).keyup(function() {
 		validateItem($(this));
+	});
+}
+
+function validateItems() {
+	$(validation_selector).each(function(idx, item) {
+		validateItem($(item));
 	});
 }
 
@@ -158,6 +165,8 @@ function initSaveButton() {
 			//TODO inform user why nothing is happening
 			return;
 		}
+		
+		validateItems();
 		
 		//if there are errors on the form, tell that to the user, and don't continue
 		if ($('.field.error').length > 0)
