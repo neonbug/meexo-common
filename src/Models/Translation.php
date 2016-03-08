@@ -5,6 +5,7 @@ class Translation extends BaseModel {
 	public static function getByLocaleAndGroupAndNamespace($locale, $group, $namespace = null)
 	{
 		$search_val = ($namespace == null ? 'app' : $namespace) . '::' . $group . '.%';
+		$search_val = str_replace('_', '\_', $search_val); //we want all underscores to be found as literals
 		
 		$items = self::whereHas('language', function($q) use ($locale, $search_val) { $q->where('locale', $locale); })
 			->where('id_translation_source', 'LIKE', $search_val)
