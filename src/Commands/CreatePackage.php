@@ -64,6 +64,7 @@ class CreatePackage extends Command {
 		if (file_exists($package_path) || file_exists($neonbug_package_path)) exit('Package already exists');
 		
 		$snake_package_name = snake_case($name);
+		$lowercase_snake_package_name = mb_strtolower($snake_package_name);
 		
 		$table_name    = $this->ask('Table name: [' .   $snake_package_name . ']', $snake_package_name);
 		$route_prefix  = $this->ask('Route prefix: [' . $snake_package_name . ']', $snake_package_name);
@@ -87,9 +88,9 @@ class CreatePackage extends Command {
 		//generate templates
 		$template_path = __DIR__ . '/CreatePackage/';
 		
-		$create_table_migration_name = date('Y_m_d') . '_000100_create_' . mb_strtolower($name) . '_table.php';
-		$insert_trans_migration_name = date('Y_m_d') . '_000101_insert_' . mb_strtolower($name) . '_translations.php';
-		$trans_dir                   = 'database/migrations/translations.' . mb_strtolower($name) . '/';
+		$create_table_migration_name = date('Y_m_d') . '_000100_create_' . $lowercase_snake_package_name . '_table.php';
+		$insert_trans_migration_name = date('Y_m_d') . '_000101_insert_' . $lowercase_snake_package_name . '_translations.php';
+		$trans_dir                   = 'database/migrations/translations.' . $lowercase_snake_package_name . '/';
 		
 		$templates = [
 			'_create_table'        => [ 'dir' => 'database/migrations/', 'file'         => $create_table_migration_name ], 
@@ -118,7 +119,7 @@ class CreatePackage extends Command {
 			$contents = $this->view_factory->file($filename)
 				->with('namespace', 				$namespace)
 				->with('package_name', 				$name)
-				->with('lowercase_package_name', 	mb_strtolower($name))
+				->with('lowercase_package_name', 	$lowercase_snake_package_name)
 				->with('table_name', 				$table_name)
 				->with('model_name', 				$model_name)
 				->with('route_prefix', 				$route_prefix)
