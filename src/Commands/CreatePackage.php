@@ -140,18 +140,28 @@ class CreatePackage extends Command {
 		}
 		
 		//inform user we're done
+		$step_idx = 1;
+		
 		$this->info('Done!');
 		$this->line('You should now:');
-		$this->line('1) add table columns in file ' . 
+		$this->line(($step_idx++) . ') add table columns in file ' . 
 			realpath($packages_path . $name . '/database/migrations/' . $create_table_migration_name) . ', ');
-		$this->line('2) add some fields in file ' . 
+		$this->line(($step_idx++) . ') add some fields in file ' . 
 			realpath($packages_path . $name . '/config/' . $config_prefix . '.php') . ', ');
-		$this->line('3) add translations in files ' . 
+		$this->line(($step_idx++) . ') add translations in files ' . 
 			realpath($packages_path . $name . '/' . $trans_dir . 'admin.php') . ' and ' . 
 			realpath($packages_path . $name . '/' . $trans_dir . 'frontend.php') . ', ');
-		$this->line('4) add ' . $namespace . '\\' . $name . '\Providers\ServiceProvider to ' . 
+		$this->line(($step_idx++) . ') add ' . $namespace . '\\' . $name . '\Providers\ServiceProvider to ' . 
 			'$package_providers array in file /config/app.php, ');
-		$this->line('5) run php artisan vendor:publish and php artisan migrate.');
+		
+		if ($is_neonbug_package)
+		{
+			$this->line(($step_idx++) . ') add "autoload": ' . 
+				'{ "psr-4": { "' . $namespace . '\\\\' . $name . '\\\\": "neonbug/' . $name . '" } } to composer.json, ');
+			$this->line(($step_idx++) . ') run composer dump-autoload, ');
+		}
+		
+		$this->line(($step_idx++) . ') run php artisan vendor:publish and php artisan migrate.');
 	}
 
 	/**
