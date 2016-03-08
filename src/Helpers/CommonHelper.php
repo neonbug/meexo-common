@@ -2,22 +2,32 @@
 
 class CommonHelper {
 	
-	function loadView($package_name, $view_name, $params)
+	public function loadView($package_name, $view_name, $params)
+	{
+		return view($this->resolveViewName($package_name, $view_name), $params);
+	}
+	
+	public function resolveViewName($package_name, $view_name)
 	{
 		if (view()->exists($package_name . '::' . $view_name))
 		{
-			return view($package_name . '::' . $view_name, $params);
+			return $package_name . '::' . $view_name;
 		}
-		return view($view_name, $params);
+		return $view_name;
 	}
 	
-	function loadAdminView($package_name, $view_name, $params)
+	public function loadAdminView($package_name, $view_name, $params)
+	{
+		return view($this->resolveAdminViewName($package_name, $view_name), $params);
+	}
+	
+	public function resolveAdminViewName($package_name, $view_name)
 	{
 		if (view()->exists($package_name . '_admin' . '::' . $view_name))
 		{
-			return view($package_name . '_admin' . '::' . $view_name, $params);
+			return $package_name . '_admin' . '::' . $view_name;
 		}
-		return view($view_name, $params);
+		return $view_name;
 	}
 	
 }
