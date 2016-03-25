@@ -52,7 +52,7 @@ return [
 	
 	// menu
 	$p . 'menu.dashboard'      => [ 'en' => 'Dashboard', 'sl' => 'Nadzorna plošča' ], 
-	$p . 'menu.title'          => [ 'en' => 'Admin menu', 'sl' => 'Admin meni' ], 
+	$p . 'menu.title'          => [ 'en' => 'Meexo CMS', 'sl' => 'Meexo CMS' ], 
 	
 	// dashboard
 	$p . 'dashboard.title'              => [ 'en' => 'Dashboard', 'sl' => 'Nadzorna plošča' ], 
