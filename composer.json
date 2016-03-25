@@ -7,7 +7,8 @@
 	"require": {
 		"bkwld/croppa": "~4.0",
 		"flowjs/flow-php-server": "dev-master",
-		"google/apiclient": "^1.1"
+		"google/apiclient": "^1.1",
+		"sendgrid/sendgrid": "~4.0"
 	},
 	"autoload": {
 		"psr-4": {
