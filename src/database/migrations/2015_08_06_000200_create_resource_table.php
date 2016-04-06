@@ -18,7 +18,7 @@ class CreateResourceTable extends Migration {
 			$table->integer('id_language');
 			$table->string('table_name', 60);
 			$table->string('column_name', 60);
-			$table->string('value');
+			$table->text('value');
 			$table->integer('id_row');
 			$table->timestamps();
 			
