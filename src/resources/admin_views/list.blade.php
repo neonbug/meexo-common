@@ -13,7 +13,8 @@
 		}
 	};
 	var config = {
-		delete_route: {!! json_encode($delete_route === null ? null : route($delete_route)) !!}
+		delete_route: {!! json_encode($delete_route === null || !Route::has($delete_route) ? 
+			null : route($delete_route)) !!}
 	};
 	
 	list.init(trans, config);
@@ -30,10 +31,10 @@
 	<table class="ui striped padded table unstackable">
 		<thead>
 			<tr>
-				@if ($edit_route != null)
+				@if ($edit_route != null && Route::has($edit_route))
 					<th>{{ trans('common::admin.list.edit-action') }}</th>
 				@endif
-				@if ($delete_route != null)
+				@if ($delete_route != null && Route::has($delete_route))
 					<th>{{ trans('common::admin.list.delete-action') }}</th>
 				@endif
 				@foreach ($fields as $field_name=>$field)
@@ -48,13 +49,13 @@
 		<tbody>
 			@foreach ($items as $item)
 				<tr>
-					@if ($edit_route != null)
+					@if ($edit_route != null && Route::has($edit_route))
 						<td class="collapsing">
 							<a href="{{ route($edit_route, [ $item->{$item->getKeyName()} ]) }}" 
 								class="ui label blue only-icon"><i class="write icon"></i></a>
 						</td>
 					@endif
-					@if ($delete_route != null)
+					@if ($delete_route != null && Route::has($delete_route))
 						<td class="collapsing">
 							<a href="#" class="ui label red only-icon delete-item" 
 								data-id-item="{{ $item->{$item->getKeyName()} }}"><i class="trash icon"></i></a>
