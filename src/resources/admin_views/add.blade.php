@@ -14,7 +14,7 @@
 	
 	var config = {
 		id_item: {{ $item == null ? -1 : $item->{$item->getKeyName()} }}, 
-		check_slug_route: {!! json_encode(route($check_slug_route)) !!}, 
+		check_slug_route: {!! json_encode(!Route::has($check_slug_route) ? null : route($check_slug_route)) !!}, 
 		formatter_date_pattern: {!! json_encode($formatter->getShortDatePattern()) !!}, 
 		messages: {!! json_encode(isSet($messages) ? $messages : []) !!}, 
 		errors: {!! json_encode($errors->all()) !!}, 
