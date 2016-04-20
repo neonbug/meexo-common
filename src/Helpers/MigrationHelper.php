@@ -40,16 +40,20 @@ class MigrationHelper {
 		}
 		
 		// load existing translations
-		$existing_translations = \Neonbug\Common\Models\Translation::all();
+		$existing_translation_sources = \Neonbug\Common\Models\TranslationSource::all();
 		$existing_source_keys = [];
+		foreach ($existing_translation_sources as $translation_source)
+		{
+			if (!in_array($translation_source->id_translation_source, $existing_source_keys))
+			{
+				$existing_source_keys[] = $translation_source->id_translation_source;
+			}
+		}
+		
+		$existing_translations = \Neonbug\Common\Models\Translation::all();
 		$existing_translation_keys = [];
 		foreach ($existing_translations as $translation)
 		{
-			if (!in_array($translation->id_translation_source, $existing_source_keys))
-			{
-				$existing_source_keys[] = $translation->id_translation_source;
-			}
-			
 			$key = $translation->id_language . '.' . $translation->id_translation_source;
 			if (!array_key_exists($key, $existing_translation_keys))
 			{
