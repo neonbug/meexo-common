@@ -65,9 +65,12 @@
 						<?php
 						$cls = (!array_key_exists('important', $field) || $field['important'] === true ? 
 						'' : 'desktop-only');
+						
+						$type = (stripos($field['type'], '::') !== false ? $field['type'] : 
+							'common_admin::list_fields.' . $field['type']);
 						?>
 						<td class="{{ $cls }}">
-							@include('common_admin::list_fields.' . $field['type'], 
+							@include($type, 
 								[ 'item' => $item, 'field_name' => $field_name, 'field' => $field, 
 									'route_prefix' => $route_prefix ])
 						</td>
