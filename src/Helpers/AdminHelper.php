@@ -241,11 +241,14 @@ class AdminHelper {
 		// nullify empty fields
 		foreach ($language_independent_fields as $field)
 		{
-			foreach ($fields[-1] as $field_name=>$field_value)
+			if (array_key_exists(-1, $fields))
 			{
-				if ($field_value == '')
+				foreach ($fields[-1] as $field_name=>$field_value)
 				{
-					$fields[-1][$field_name] = null;
+					if ($field_value == '')
+					{
+						$fields[-1][$field_name] = null;
+					}
 				}
 			}
 		}
