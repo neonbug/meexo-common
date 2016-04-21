@@ -94,6 +94,8 @@ class ServiceProvider extends \Neonbug\Common\Providers\BaseServiceProvider {
 							'title' => $arr[0], 
 							'icon' => (array_key_exists('menu.icon', $route->getAction()) ? 
 								$route->getAction()['menu.icon'] : 'arrow right'), 
+							'weight' => (array_key_exists('weight', $route->getAction()) ? 
+								$route->getAction()['weight'] : 5), 
 							'items' => []
 						];
 					}
@@ -105,6 +107,13 @@ class ServiceProvider extends \Neonbug\Common\Providers\BaseServiceProvider {
 			}
 			
 			$view->menu_items = array_values($menu_items);
+			
+			usort($view->menu_items, function($a, $b) {
+				if ($a['weight'] < $b['weight']) return -1;
+				if ($a['weight'] > $b['weight']) return 1;
+				return 0;
+			});
+			
 			$view->withEncryptedCsrfToken(Crypt::encrypt(csrf_token()));
 			$view->withUser(Auth::user());
 		});
