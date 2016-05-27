@@ -40,6 +40,7 @@ return [
 	$p . 'add.dropdown.empty-value' => [ 'en' => '[empty]', 'sl' => '[prazno]' ], 
 	
 	// list
+	$p . 'list.add-action'                  => [ 'en' => 'Add', 'sl' => 'Dodaj' ], 
 	$p . 'list.edit-action'                 => [ 'en' => 'Edit', 'sl' => 'Uredi' ], 
 	$p . 'list.delete-action'               => [ 'en' => 'Delete', 'sl' => 'Odstrani' ], 
 	$p . 'list.delete-confirmation-message' => [ 

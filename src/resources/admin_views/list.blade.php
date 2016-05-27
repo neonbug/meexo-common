@@ -24,7 +24,7 @@
 @section('content')
 	@if (Route::has($add_route))
 		<a href="{{ route($add_route) }}" class="ui large label grey">
-			<i class="plus icon"></i> {{ trans('menu::admin.title.add') }}
+			<i class="plus icon"></i> {{ trans('common::admin.list.add-action') }}
 		</a>
 	@endif
 	
