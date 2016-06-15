@@ -97,6 +97,7 @@ class AdminHelper {
 		$values = $this->fillItem($item, $fields, $allowed_language_independent_fields, 
 			$allowed_language_dependent_fields);
 		
+		$item->touch();
 		$item->save();
 		
 		if (sizeof(array_keys($values)) > 0)
