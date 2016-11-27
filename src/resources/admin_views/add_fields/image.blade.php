@@ -1,10 +1,17 @@
 <tr class="top aligned field-image">
 	<th class="collapsing">
 		{{ $field_title }}
+		@if (array_key_exists('required', $field) && $field['required'] === true)
+			<i class="orange small asterisk icon" 
+				title="{{ trans('common::admin.add.errors.validation.required') }}"></i>
+		@endif
 	</th>
 	<td>
-		<div class="field">
-			<input type="file" name="field[{{ $id_language }}][{{ $field['name'] }}]" data-name="{{ $field['name'] }}" />
+		<div class="field" data-name="field[{{ $id_language }}][{{ $field['name'] }}]">
+			<input type="file" name="field[{{ $id_language }}][{{ $field['name'] }}]" data-name="{{ $field['name'] }}"
+				class="{{ array_key_exists('required', $field) && $field['required'] === true ? 
+					'validation-image-required' : '' }}" />
+			<div class="error-label ui pointing red basic label"></div>
 		</div>
 	</td>
 </tr>
@@ -31,7 +38,7 @@
 					<div class="extra content">
 						<div class="ui checkbox">
 							<input type="checkbox" name="field[{{ $id_language }}][remove-file][{{ $field['name'] }}]" 
-								value="true" />
+								value="true" class="current-image-remove" data-name="{{ $field['name'] }}" />
 							<label>{{ trans('common::admin.add.current-image-remove') }}</label>
 						</div>
 					</div>

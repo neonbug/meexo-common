@@ -106,7 +106,7 @@ function markSlugField(slug_field, is_error) {
 	}
 }
 
-var validation_selector = '.validation-required, .validation-int';
+var validation_selector = '.validation-required, .validation-int, .validation-image-required';
 function initValidation() {
 	$(validation_selector).change(function() {
 		validateItem($(this));
@@ -142,6 +142,26 @@ function validateItem(item) {
 		if (value.length > 0 && isNaN(value))
 		{
 			error = app_data.trans.errors.validation_number;
+		}
+	}
+	
+	if (item.hasClass('validation-image-required'))
+	{
+		if (item.val().length == 0)
+		{
+			var field_name = item.data('name');
+			var image_remove_checkbox = $('.current-image-remove[data-name="' + field_name + '"]');
+			if (image_remove_checkbox.length == 0) //no current image exists
+			{
+				error = app_data.trans.errors.validation_required;
+			}
+			else
+			{
+				if (image_remove_checkbox.get(0).checked) //current image is marked to be deleted
+				{
+					error = app_data.trans.errors.validation_required;
+				}
+			}
 		}
 	}
 	

@@ -252,3 +252,19 @@ body
 	{
 		opacity: 0.5;
 	}
+
+.ui.form .field.error input[type="file"]
+{
+	display: block;
+	background: #FFF6F6;
+	border: 1px solid #E0B4B4;
+	border-radius: .28571429rem;
+	color: #9F3A38;
+	border-radius: '';
+	box-shadow: none;
+}
+
+.ui.form .field.error input[type="file"]:focus
+{
+	-webkit-appearance: none;
+}
