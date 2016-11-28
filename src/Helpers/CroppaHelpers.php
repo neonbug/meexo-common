@@ -19,7 +19,9 @@ class CroppaHelpers extends \Bkwld\Croppa\Helpers {
 	 * @see Bkwld\Croppa\URL::generate()
 	 */
 	public function url($url, $width = null, $height = null, $options = null) {
-		return ($width == null && $height == null ? 
+		$config_ignore = Config::get('croppa.ignore');
+		
+		return (($width == null && $height == null) || preg_match('#'.$config_ignore.'#', $url) ? 
 			$this->rawUrl($url) : 
 			parent::url($url, $width, $height, $options));
 	}
