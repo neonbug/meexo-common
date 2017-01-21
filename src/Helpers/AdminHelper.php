@@ -246,7 +246,7 @@ class AdminHelper {
 			{
 				foreach ($fields[-1] as $field_name=>$field_value)
 				{
-					if ($field_value == '')
+					if ($field_value === '')
 					{
 						$fields[-1][$field_name] = null;
 					}
