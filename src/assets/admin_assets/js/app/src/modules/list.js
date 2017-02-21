@@ -8,7 +8,7 @@ function initDelete()
 {
 	if (app_data.config.delete_route != null)
 	{
-		$('.delete-item').click(function() {
+		$(document).on('click', '.delete-item', function() {
 			var id_item = this.dataset.idItem;
 			var modal = $('.delete-item-modal');
 			
