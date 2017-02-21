@@ -140,33 +140,33 @@ body
 {
 	margin: 0px;
 }
-.add .tab.segment .ui.table
+.add .tab.segment > .ui.table
 {
 }
-	.add .tab.segment .ui.table tr th, .add .tab.segment .ui.table tr.field-label td
+	.add .tab.segment > .ui.table > tbody > tr > th, .add .tab.segment > .ui.table > tbody > tr.field-label > td
 	{
 		padding-top: 19px;
 	}
-	.add .tab.segment .ui.table tr.field-boolean th, 
-		.add .tab.segment .ui.table tr.field-image th, 
-		.add .tab.segment .ui.table tr.field-file th
+	.add .tab.segment > .ui.table > tbody > tr.field-boolean > th, 
+		.add .tab.segment > .ui.table > tbody > tr.field-image > th, 
+		.add .tab.segment > .ui.table > tbody > tr.field-file > th
 	{
 		padding-top: 9px;
 	}
-	.add .tab.segment .ui.table tr td
+	.add .tab.segment > .ui.table > tbody > tr > td
 	{
 		border-top: 0px;
 	}
-	.add .tab.segment .ui.table td:first-child
+	.add .tab.segment > .ui.table > tbody > tr > td:first-child
 	{
 		min-width: 180px;
 		font-weight: bold;
 	}
-		.add .tab.segment .ui.table .field .error-label
+		.add .tab.segment > .ui.table .field .error-label
 		{
 			display: none;
 		}
-		.add .tab.segment .ui.table .field.error .error-label
+		.add .tab.segment > .ui.table .field.error .error-label
 		{
 			display: inline-block;
 		}
