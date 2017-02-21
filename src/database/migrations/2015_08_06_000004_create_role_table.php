@@ -27,6 +27,9 @@ class CreateRoleTable extends Migration {
 			$table->integer('id_user');
 			$table->string('id_role', 255);
 			$table->timestamps();
+			
+			$table->foreign('id_user')->references('id_user')->on('user');
+			$table->foreign('id_role')->references('id_role')->on('role');
 		});
 		
 		DB::table('role')->insert(
