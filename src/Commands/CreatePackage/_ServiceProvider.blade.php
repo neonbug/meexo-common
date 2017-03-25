@@ -8,13 +8,14 @@ use \Illuminate\Routing\Router as Router;
 
 class ServiceProvider extends \Neonbug\Common\Providers\BaseServiceProvider {
 	
-	const PACKAGE_NAME     = '{{ $lowercase_package_name }}';
-	const PREFIX           = '{{ $route_prefix }}';
-	const ROLE             = '{{ $table_name }}';
-	const TABLE_NAME       = '{{ $table_name }}';
-	const CONTROLLER       = '\{{ $namespace }}\{{ $package_name }}\Controllers\Controller';
-	const ADMIN_CONTROLLER = '\{{ $namespace }}\{{ $package_name }}\Controllers\AdminController';
-	const CONFIG_PREFIX    = '{{ $config_prefix }}';
+	const PACKAGE_NAME       = '{{ $lowercase_package_name }}';
+	const PREFIX             = '{{ $route_prefix }}';
+	const ROLE               = '{{ $table_name }}';
+	const TABLE_NAME         = '{{ $table_name }}';
+	const CONTROLLER         = '\{{ $namespace }}\{{ $package_name }}\Controllers\Controller';
+	const ADMIN_CONTROLLER   = '\{{ $namespace }}\{{ $package_name }}\Controllers\AdminController';
+	const CONFIG_PREFIX      = '{{ $config_prefix }}';
+	const FULL_CONFIG_PREFIX = '{{ $config_root }}.{{ $config_prefix }}';
 	
 	/**
 	 * Define your route model bindings, pattern filters, etc.
@@ -60,28 +61,36 @@ class ServiceProvider extends \Neonbug\Common\Providers\BaseServiceProvider {
 		$resource_repo = App::make('ResourceRepository');
 		
 		//frontend
+		$slug_routes_at_root = Config::get(static::FULL_CONFIG_PREFIX . '.slug_routes_at_root', false);
+		$slugs = ($language == null ? null : $resource_repo->getSlugs($language->id_language, static::TABLE_NAME));
+		
 		$router->group([ 'middleware' => [ 'online' ], 'prefix' => $locale . '/' . 
 			trans(static::PACKAGE_NAME . '::frontend.route.prefix') ], 
-			function($router) use ($locale, $resource_repo, $language)
+			function($router) use ($slugs, $slug_routes_at_root)
 		{
 			$router->get('/',             [ 'as' => static::PREFIX . '::index',   'uses' => static::CONTROLLER . '@index' ]);
 			$router->get('index',         [                                       'uses' => static::CONTROLLER . '@index' ]);
 			$router->get('item/{id}',     [ 'as' => static::PREFIX . '::item',    'uses' => static::CONTROLLER . '@item' ]);
 			$router->get('preview/{key}', [ 'as' => static::PREFIX . '::preview', 'uses' => static::CONTROLLER . '@preview' ]);
 			
-			if ($language != null)
+			if ($slugs != null)
 			{
-				$slugs = $resource_repo->getSlugs($language->id_language, static::TABLE_NAME);
-				foreach ($slugs as $slug)
-				{
-					$router->get($slug->value, [ 'as' => static::PREFIX . '::slug::' . $slug->value, 
-						function() use ($slug) {
-						$controller = App::make(static::CONTROLLER);
-						return $controller->callAction('item', [ 'id' => $slug->id_row ]);
-					} ]);
-				}
+				$this->setRoutesFromSlugs($router, $slugs, ($slug_routes_at_root === true ? 'default' : ''));
 			}
 		});
+		
+		//put routes at root level (i.e. /en/contents/abc is also accessible via /en/abc)
+		if ($slug_routes_at_root === true)
+		{
+			$router->group([ 'middleware' => [ 'online' ], 'prefix' => $locale ], 
+				function($router) use ($slugs)
+			{
+				if ($slugs != null)
+				{
+					$this->setRoutesFromSlugs($router, $slugs);
+				}
+			});
+		}
 		
 		//admin
 		$router->group([ 'prefix' => $admin_locale . '/admin/' . static::PREFIX, 
@@ -127,6 +136,21 @@ class ServiceProvider extends \Neonbug\Common\Providers\BaseServiceProvider {
 		});
 
 		parent::boot($router);
+	}
+	
+	protected function setRoutesFromSlugs($router, $slugs, $route_name_postfix = '')
+	{
+		$postfix = ($route_name_postfix == '' ? '' : '-' . $route_name_postfix);
+		$route_name_prefix = static::PREFIX . '::slug' . $postfix . '::';
+		
+		foreach ($slugs as $slug)
+		{
+			$router->get($slug->value, [ 'as' => $route_name_prefix . $slug->value, 
+				function() use ($slug) {
+				$controller = App::make(static::CONTROLLER);
+				return $controller->callAction('item', [ 'id' => $slug->id_row ]);
+			} ]);
+		}
 	}
 
 	/**
