@@ -306,6 +306,30 @@ function initDropdowns() {
 	});
 }
 
+function initMetaDescriptions() {
+	var character_count_handler = function() {
+		var character_count = this.value.length;
+		var character_count_label = $('.character-count', $(this).closest('.field'));
+		
+		character_count_label.html(character_count);
+		
+		if (character_count <= 160)
+		{
+			character_count_label.removeClass('warning');
+		}
+		else
+		{
+			character_count_label.addClass('warning');
+		}
+	};
+	
+	var meta_description_input = $('.field-meta-description .field input');
+	
+	meta_description_input.on('change', character_count_handler);
+	meta_description_input.on('keyup', character_count_handler);
+	meta_description_input.change();
+}
+
 module.exports.init = function(trans, config) {
 	app_data.trans = trans;
 	app_data.config = config;
@@ -322,5 +346,6 @@ module.exports.init = function(trans, config) {
 		initMessages();
 		initErrorMessages();
 		initDropdowns();
+		initMetaDescriptions();
 	});
 };

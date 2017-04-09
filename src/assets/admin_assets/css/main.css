@@ -176,6 +176,20 @@ body
 			background-color: #f2711c;
 			color: #ffffff;
 		}
+		.field-meta-description .field
+		{
+			display: flex;
+			padding-right: 52px;
+		}
+			.field-meta-description .field .character-count
+			{
+				width: 52px;
+				text-align: center;
+			}
+			.field-meta-description .field .character-count.warning
+			{
+				color: #DB2828;
+			}
 
 .ui.tiny.modal
 {
