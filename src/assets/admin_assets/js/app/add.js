@@ -368,12 +368,12 @@
 
 	function initMetaDescriptions() {
 		var character_count_handler = function() {
-			var character_count = this.value.length;
+			var character_count = 160 - this.value.length;
 			var character_count_label = $('.character-count', $(this).closest('.field'));
 			
 			character_count_label.html(character_count);
 			
-			if (character_count <= 160)
+			if (character_count >= 0)
 			{
 				character_count_label.removeClass('warning');
 			}
