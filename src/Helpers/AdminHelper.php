@@ -387,9 +387,7 @@ class AdminHelper {
 				
 				if (file_exists('uploads/' . $directory . '/' . $filename))
 				{
-					$path_info = pathinfo($filename);
-					$filename = $path_info['filename'] . '.' . date('Y-m-d-H-i-s') . 
-						($path_info['extension'] == '' ? '' : '.' . $path_info['extension']);
+					unlink('uploads/' . $directory . '/' . $filename);
 				}
 				$file->move('uploads/' . $directory, $filename);
 				
