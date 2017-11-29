@@ -207,6 +207,12 @@ class ServiceProvider extends \Neonbug\Common\Providers\BaseServiceProvider {
 			return $url;
 		});
 		
+		if (!$this->app->bound('\Neonbug\Common\Repositories\ResourceRepository'))
+		{
+			$this->app->singleton('\Neonbug\Common\Repositories\ResourceRepository', 
+				'\Neonbug\Common\Repositories\ResourceRepository');
+		}
+		
 		if (!$this->app->bound('ResourceRepository'))
 		{
 			$this->app->singleton('ResourceRepository', '\Neonbug\Common\Repositories\ResourceRepository');
