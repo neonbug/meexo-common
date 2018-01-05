@@ -57,33 +57,54 @@
 		<input type="hidden" name="_token" value="{{ csrf_token() }}" />
 		
 		<div class="ui top attached tabular menu">
-			<a class="active item" data-tab="general">{{ trans('common::admin.add.tab-title-general') }}</a>
+			<?php
+			$active_class = 'active';
+			?>
+			
+			@if (sizeof($fields['language_independent']) > 0)
+				<a class="<?php echo $active_class; $active_class = ''; ?> item" data-tab="general">
+					{{ trans('common::admin.add.tab-title-general') }}
+				</a>
+			@endif
+			
 			@foreach ($languages as $language)
 				<?php if (!array_key_exists($language->id_language, $fields['language_dependent'])) continue; ?>
-				<a class="item" data-tab="{{ $language->locale }}">{{ $language->name }}</a>
+				<a class="<?php echo $active_class; $active_class = ''; ?> item" data-tab="{{ $language->locale }}">
+					{{ $language->name }}
+				</a>
 			@endforeach
 		</div>
-		<div class="ui bottom attached active tab segment" data-tab="general">
-			<table class="ui very basic table"><tbody>
-				@foreach ($fields['language_independent'] as $field)
-					<?php
-					$type = (stripos($field['type'], '::') !== false ? $field['type'] : 
-						'common_admin::add_fields.' . $field['type']);
-					$params = [ 
-						'item' => $item, 
-						'id_language' => -1, 
-						'field' => $field, 
-						'field_title' => trans($package_name . '::admin.add.field-title.' . $field['name']), 
-						'prefix' => $prefix
-					];
-					?>
-					@include($type, $params)
-				@endforeach
-			</tbody></table>
-		</div>
+		
+		<?php
+		$active_class = 'active';
+		?>
+		
+		@if (sizeof($fields['language_independent']) > 0)
+			<div class="ui bottom attached tab segment <?php echo $active_class; $active_class = ''; ?>"
+				data-tab="general">
+				<table class="ui very basic table"><tbody>
+					@foreach ($fields['language_independent'] as $field)
+						<?php
+						$type = (stripos($field['type'], '::') !== false ? $field['type'] : 
+							'common_admin::add_fields.' . $field['type']);
+						$params = [ 
+							'item' => $item, 
+							'id_language' => -1, 
+							'field' => $field, 
+							'field_title' => trans($package_name . '::admin.add.field-title.' . $field['name']), 
+							'prefix' => $prefix
+						];
+						?>
+						@include($type, $params)
+					@endforeach
+				</tbody></table>
+			</div>
+		@endif
+		
 		@foreach ($languages as $language)
 			<?php if (!array_key_exists($language->id_language, $fields['language_dependent'])) continue; ?>
-			<div class="ui bottom attached tab segment" data-tab="{{ $language->locale }}">
+			<div class="ui bottom attached tab segment <?php echo $active_class; $active_class = ''; ?>"
+				data-tab="{{ $language->locale }}">
 				<table class="ui very basic table"><tbody>
 					@foreach ($fields['language_dependent'][$language->id_language] as $field)
 						<?php
