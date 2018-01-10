@@ -12,6 +12,10 @@
 				class="{{ array_key_exists('required', $field) && $field['required'] === true ? 
 					'validation-image-required' : '' }}" />
 			<div class="error-label ui pointing red basic label"></div>
+			
+			@if (array_key_exists('note', $field) && $field['note'] != '')
+				<div><div class="ui pointing label">{{ trans($field['note']) }}</div></div>
+			@endif
 		</div>
 	</td>
 </tr>
