@@ -1,6 +1,10 @@
 <tr class="top aligned field-date">
 	<th class="collapsing">
 		{{ $field_title }}
+		@if (array_key_exists('required', $field) && $field['required'] === true)
+			<i class="orange small asterisk icon" 
+				title="{{ trans('common::admin.add.errors.validation.required') }}"></i>
+		@endif
 	</th>
 	<td>
 		<div class="field">
