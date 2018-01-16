@@ -53,7 +53,7 @@ class AdminHelper {
 				{
 					$field = $lang_dependent_fields[$id_language][$i];
 					
-					$event = new \Neonbug\Common\Events\AdminAddEditPrepareField('dependent', $field, $item);
+					$event = new \Neonbug\Common\Events\AdminAddEditPrepareField('dependent', $field, $item, $id_language);
 					Event::fire($event);
 					$lang_dependent_fields[$id_language][$i] = $event->field;
 					
@@ -140,11 +140,17 @@ class AdminHelper {
 	
 	public function deleteItem($id, $model, $primary_key)
 	{
+		$event = new \Neonbug\Common\Events\AdminBeforeDeleteItem($id, $model, $primary_key);
+		Event::fire($event);
+		
 		$model::where($primary_key, $id)
 			->delete();
 		
 		App::make('ResourceRepository')
 			->deleteValues(call_user_func($model . '::getTableName'), [ $id ]);
+		
+		$event = new \Neonbug\Common\Events\AdminAfterDeleteItem($id, $model, $primary_key);
+		Event::fire($event);
 	}
 	
 	//rendering
@@ -307,6 +313,16 @@ class AdminHelper {
 		
 		App::make('\Neonbug\Common\Helpers\AdminHelper')
 			->fillAndSaveItem($item, $all_fields, $allowed_lang_independent_fields, $allowed_lang_dependent_fields);
+		
+		$event = new \Neonbug\Common\Events\AdminAddEditSavedItem(
+			$item, 
+			$all_fields, 
+			$language_independent_fields, 
+			$language_dependent_fields, 
+			App::make('LanguageRepository')->getAll(), 
+			(sizeof($errors) > 0)
+		);
+		Event::fire($event);
 		
 		if (sizeof($errors) > 0)
 		{
