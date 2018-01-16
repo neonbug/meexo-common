@@ -198,6 +198,7 @@ class AdminHelper {
 			'check_slug_route' => $prefix . '::admin::check-slug', 
 			'prefix'           => $prefix, 
 			'item'             => null, 
+			'model_name'       => $model_name, 
 			'supports_preview' => $supports_preview
 		];
 		
@@ -229,6 +230,7 @@ class AdminHelper {
 			'check_slug_route' => $prefix . '::admin::check-slug', 
 			'prefix'           => $prefix, 
 			'item'             => $item, 
+			'model_name'       => $model_name, 
 			'supports_preview' => $supports_preview
 		];
 		

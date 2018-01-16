@@ -47,7 +47,12 @@
 	
 	@foreach ($unique_types as $type)
 		@if (view()->exists($type . '--head'))
-			@include($type . '--head')
+			@include($type . '--head', [ 
+				'item'        => $item, 
+				'model_name'  => $model_name, 
+				'id_language' => -1, 
+				'prefix'      => $prefix
+			])
 		@endif
 	@endforeach
 @stop
@@ -88,11 +93,12 @@
 						$type = (stripos($field['type'], '::') !== false ? $field['type'] : 
 							'common_admin::add_fields.' . $field['type']);
 						$params = [ 
-							'item' => $item, 
+							'item'        => $item, 
+							'model_name'  => $model_name, 
 							'id_language' => -1, 
-							'field' => $field, 
+							'field'       => $field, 
 							'field_title' => trans($package_name . '::admin.add.field-title.' . $field['name']), 
-							'prefix' => $prefix
+							'prefix'      => $prefix
 						];
 						?>
 						@include($type, $params)
@@ -111,11 +117,12 @@
 						$type = (stripos($field['type'], '::') !== false ? $field['type'] : 
 							'common_admin::add_fields.' . $field['type']);
 						$params = [ 
-							'item' => $item, 
+							'item'        => $item, 
+							'model_name'  => $model_name, 
 							'id_language' => $language->id_language, 
-							'field' => $field, 
+							'field'       => $field, 
 							'field_title' => trans($package_name . '::admin.add.field-title.' . $field['name']), 
-							'prefix' => $prefix
+							'prefix'      => $prefix
 						];
 						?>
 						@include($type, $params)
