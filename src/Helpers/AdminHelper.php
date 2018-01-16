@@ -278,7 +278,9 @@ class AdminHelper {
 				$model_name, 
 				$all_fields, 
 				$allowed_lang_independent_fields, 
-				$allowed_lang_dependent_fields
+				$allowed_lang_dependent_fields, 
+				$language_independent_fields, 
+				$language_dependent_fields
 			);
 		}
 		else if ($route_postfix == 'edit')
@@ -288,7 +290,9 @@ class AdminHelper {
 				$model_name, 
 				$all_fields, 
 				$allowed_lang_independent_fields, 
-				$allowed_lang_dependent_fields
+				$allowed_lang_dependent_fields, 
+				$language_independent_fields, 
+				$language_dependent_fields
 			);
 		}
 		

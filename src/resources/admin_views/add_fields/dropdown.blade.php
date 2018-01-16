@@ -8,13 +8,36 @@
 	</th>
 	<td>
 		<div class="field">
-			<select class="ui search dropdown" name="field[{{ $id_language }}][{{ $field['name'] }}]">
-				@if (!array_key_exists('required', $field) || $field['required'] === false)
+			<?php
+			$multiple = array_key_exists('multiple', $field) && $field['multiple'] === true;
+			
+			$field_name = 'field[' . $id_language . '][' . $field['name'] . ']';
+			if ($multiple)
+			{
+				$field_name .= '[]';
+			}
+			?>
+			<select class="ui search dropdown" name="{{ $field_name }}"
+				{!! $multiple ? 'multiple=""' : '' !!}>
+				@if ((!array_key_exists('required', $field) || $field['required'] === false) && !$multiple)
 					<option value="">{{ trans('common::admin.add.dropdown.empty-value') }}</option>
 				@endif
 				@foreach ($field['values'] as $key=>$title)
-					<option value="{{ $key }}" 
-						{{ array_key_exists('value', $field) && $key == $field['value'] ? 'selected' : '' }}>
+					<?php
+					$selected = false;
+					if (array_key_exists('value', $field))
+					{
+						if (is_array($field['value'])) //multiple values
+						{
+							$selected = in_array($key, $field['value']);
+						}
+						else
+						{
+							$selected = $key == $field['value'];
+						}
+					}
+					?>
+					<option value="{{ $key }}" {{ $selected ? 'selected' : '' }}>
 						{{ $title }}
 					</option>
 				@endforeach

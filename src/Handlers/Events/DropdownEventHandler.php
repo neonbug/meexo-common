@@ -14,7 +14,7 @@ class DropdownEventHandler
 	*/
 	public function subscribe($events)
 	{
-		$events->listen('Neonbug\\Common\\Events\\AdminAddEditPrepareField', function($event) {
+		$events->listen('Neonbug\Common\Events\AdminAddEditPrepareField', function($event) {
 			if ($event->field['type'] != 'dropdown') return;
 			
 			if (array_key_exists('values', $event->field)) //static values
@@ -81,6 +81,70 @@ class DropdownEventHandler
 			if (array_key_exists('default_value', $event->field))
 			{
 				$event->field['value'] = $event->field['default_value'];
+			}
+		});
+		
+		$events->listen('Neonbug\Common\Events\AdminEditPreparedFields', function($event) {
+			$fields = $event->fields['language_independent'];
+			for ($i=0; $i<sizeof($fields); $i++)
+			{
+				$field = $fields[$i];
+				if (array_key_exists('multiple', $field) && 
+					$field['multiple'] === true && 
+					array_key_exists('value', $field))
+				{
+					$separator = (array_key_exists('separator', $field) ? $field['separator'] : ';');
+					$event->fields['language_independent'][$i]['value'] = explode($separator, $field['value']);
+				}
+			}
+			
+			foreach ($event->fields['language_dependent'] as $id_language=>$fields)
+			{
+				for ($i=0; $i<sizeof($fields); $i++)
+				{
+					$field = $fields[$i];
+					if (array_key_exists('multiple', $field) && 
+						$field['multiple'] === true && 
+						array_key_exists('value', $field))
+					{
+						$separator = (array_key_exists('separator', $field) ? $field['separator'] : ';');
+						$event->fields['language_dependent'][$id_language][$i]['value'] = explode($separator, $field['value']);
+					}
+				}
+			}
+		});
+		
+		$events->listen([
+				'Neonbug\Common\Events\AdminAddSavePreparedFields', 
+				'Neonbug\Common\Events\AdminEditSavePreparedFields'
+			], function($event) {
+			foreach (
+				[
+					'independent' => $event->all_language_independent_fields, 
+					'dependent'   => $event->all_language_dependent_fields
+				]
+				as $type=>$all_fields)
+			{
+				foreach ($all_fields as $field)
+				{
+					if ($field['type'] != 'dropdown') continue;
+					
+					if (array_key_exists('multiple', $field) && $field['multiple'] === true)
+					{
+						$separator = (array_key_exists('separator', $field) ? $field['separator'] : ';');
+						
+						foreach ($event->fields as $id_language=>$fields)
+						{
+							if ($type == 'independent' && $id_language != -1) continue;
+							
+							if (array_key_exists($field['name'], $event->fields[$id_language]))
+							{
+								$event->fields[$id_language][$field['name']] = 
+									implode($separator, $event->fields[$id_language][$field['name']]);
+							}
+						}
+					}
+				}
 			}
 		});
 	}
