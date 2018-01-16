@@ -151,7 +151,10 @@ class ServiceProvider extends \Neonbug\Common\Providers\BaseServiceProvider {
 		//============
 		//== EVENTS ==
 		//============
-		Event::subscribe('\\Neonbug\\Common\\Handlers\\Events\\DropdownEventHandler');
+		Event::subscribe('\Neonbug\Common\Handlers\Events\DropdownEventHandler');
+		Event::subscribe('\Neonbug\Common\Handlers\Events\OrdEventHandler');
+		Event::subscribe('\Neonbug\Common\Handlers\Events\PasswordHashEventHandler');
+		Event::subscribe('\Neonbug\Common\Handlers\Events\SlugEventHandler');
 
 		parent::boot($router);
 	}
