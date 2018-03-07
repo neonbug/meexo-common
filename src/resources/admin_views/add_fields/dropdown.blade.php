@@ -42,6 +42,10 @@
 					</option>
 				@endforeach
 			</select>
+			
+			@if (array_key_exists('note', $field) && $field['note'] != '')
+				<div class="ui pointing label">{{ trans($field['note']) }}</div>
+			@endif
 		</div>
 	</td>
 </tr>
