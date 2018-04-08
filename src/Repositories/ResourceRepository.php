@@ -12,6 +12,7 @@ class ResourceRepository {
 		{
 			$resources = Resource::where('id_language', $id_language)
 				->where('column_name', 'slug')
+				->where('value', '!=', '')
 				->get();
 			$this->cached_slugs = array();
 			foreach ($resources as $resource)
