@@ -108,6 +108,8 @@ class ServiceProvider extends \Neonbug\Common\Providers\BaseServiceProvider {
 			
 			$view->menu_items = array_values($menu_items);
 			
+			$view->compact_admin_menu = Config::get('app.compact_admin_menu', false);
+			
 			usort($view->menu_items, function($a, $b) {
 				if ($a['weight'] < $b['weight']) return -1;
 				if ($a['weight'] > $b['weight']) return 1;
