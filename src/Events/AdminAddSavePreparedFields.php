@@ -14,6 +14,7 @@ class AdminAddSavePreparedFields extends Event {
 	public $language_dependent_fields;
 	public $all_language_independent_fields;
 	public $all_language_dependent_fields;
+	public $item;
 	
 	/**
 	 * Create a new event instance.
@@ -21,7 +22,8 @@ class AdminAddSavePreparedFields extends Event {
 	 * @return void
 	 */
 	public function __construct($route_prefix, $class_name, $fields, $language_independent_fields, 
-		$language_dependent_fields, $all_language_independent_fields, $all_language_dependent_fields)
+		$language_dependent_fields, $all_language_independent_fields, $all_language_dependent_fields, 
+		$item)
 	{
 		$this->route_prefix                    = $route_prefix;
 		$this->class_name                      = $class_name;
@@ -30,6 +32,7 @@ class AdminAddSavePreparedFields extends Event {
 		$this->language_dependent_fields       = $language_dependent_fields;
 		$this->all_language_independent_fields = $all_language_independent_fields;
 		$this->all_language_dependent_fields   = $all_language_dependent_fields;
+		$this->item                            = $item;
 	}
 	
 }

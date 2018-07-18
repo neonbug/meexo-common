@@ -217,7 +217,7 @@ class AdminHelper {
 			$item
 		);
 		
-		$event = new \Neonbug\Common\Events\AdminEditPreparedFields($model_name, $fields);
+		$event = new \Neonbug\Common\Events\AdminEditPreparedFields($model_name, $fields, $item);
 		Event::fire($event);
 		$fields = $event->fields;
 		
@@ -288,7 +288,8 @@ class AdminHelper {
 				$allowed_lang_independent_fields, 
 				$allowed_lang_dependent_fields, 
 				$language_independent_fields, 
-				$language_dependent_fields
+				$language_dependent_fields, 
+				$item
 			);
 		}
 		else if ($route_postfix == 'edit')
@@ -300,7 +301,8 @@ class AdminHelper {
 				$allowed_lang_independent_fields, 
 				$allowed_lang_dependent_fields, 
 				$language_independent_fields, 
-				$language_dependent_fields
+				$language_dependent_fields, 
+				$item
 			);
 		}
 		
