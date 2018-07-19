@@ -9,16 +9,18 @@ class AdminAddPreparedFields extends Event {
 	
 	public $class_name;
 	public $fields;
+	public $item;
 	
 	/**
 	 * Create a new event instance.
 	 *
 	 * @return void
 	 */
-	public function __construct($class_name, $fields)
+	public function __construct($class_name, $fields, $item)
 	{
 		$this->class_name = $class_name;
 		$this->fields = $fields;
+		$this->item = $item;
 	}
 	
 }

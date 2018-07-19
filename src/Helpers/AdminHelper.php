@@ -185,7 +185,7 @@ class AdminHelper {
 			$language_independent_fields
 		);
 		
-		$event = new \Neonbug\Common\Events\AdminAddPreparedFields($model_name, $fields);
+		$event = new \Neonbug\Common\Events\AdminAddPreparedFields($model_name, $fields, null);
 		Event::fire($event);
 		$fields = $event->fields;
 		
