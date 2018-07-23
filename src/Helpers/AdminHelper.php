@@ -247,6 +247,21 @@ class AdminHelper {
 		$allowed_lang_independent_fields = array_map($map, $language_independent_fields);
 		$allowed_lang_dependent_fields   = array_map($map, $language_dependent_fields);
 		
+		// fill missing languages
+		if (!array_key_exists(-1, $fields))
+		{
+			$fields[-1] = [];
+		}
+		
+		$languages = App::make('LanguageRepository')->getAll();
+		foreach ($languages as $language)
+		{
+			if (!array_key_exists($language->id_language, $fields))
+			{
+				$fields[$language->id_language] = [];
+			}
+		}
+		
 		// nullify empty fields
 		foreach ($language_independent_fields as $field)
 		{
@@ -323,7 +338,7 @@ class AdminHelper {
 			$all_fields, 
 			$language_independent_fields, 
 			$language_dependent_fields, 
-			App::make('LanguageRepository')->getAll(), 
+			$languages, 
 			(sizeof($errors) > 0)
 		);
 		Event::fire($event);
