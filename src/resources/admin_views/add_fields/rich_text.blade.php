@@ -4,8 +4,12 @@
 	</th>
 	<td>
 		<div class="field">
-			<textarea name="field[{{ $id_language }}][{{ $field['name'] }}]" 
-				data-name="{{ $field['name'] }}" data-type="rich_text">{{ $field['value'] }}</textarea>
+			<textarea
+				name="field[{{ $id_language }}][{{ $field['name'] }}]" 
+				data-name="{{ $field['name'] }}"
+				data-type="rich_text"
+				data-extra-plugins="{{ array_key_exists('extra_plugins', $field) ? json_encode($field['extra_plugins']) : '' }}"
+				>{{ $field['value'] }}</textarea>
 		</div>
 	</td>
 </tr>

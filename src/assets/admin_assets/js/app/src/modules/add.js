@@ -231,7 +231,7 @@ function initRichEditors() {
 	var file_browser_base_href = app_data.config.base_url + '/vendor/common/admin_assets/js/ckeditor/plugins/kcfinder/';
 	
 	$('textarea[data-type="rich_text"]').each(function(idx, el) {
-		CKEDITOR.replace(el, {
+		var config = {
 			entities: false, 
 			baseHref: app_data.config.base_url, 
 			toolbarGroups: [
@@ -257,7 +257,25 @@ function initRichEditors() {
 			filebrowserUploadUrl: file_browser_base_href + 'upload.php?opener=ckeditor&type=files', 
 			filebrowserImageUploadUrl: file_browser_base_href + 'upload.php?opener=ckeditor&type=images', 
 			filebrowserFlashUploadUrl: file_browser_base_href + 'upload.php?opener=ckeditor&type=flash'
-		});
+		};
+		
+		if (el.dataset.extraPlugins !== undefined && el.dataset.extraPlugins != '')
+		{
+			var extra_plugins = JSON.parse(el.dataset.extraPlugins);
+			var plugin_names = extra_plugins.map(function(plugin) { return plugin.plugin; });
+			
+			config.extraPlugins = plugin_names.join(',');
+			
+			for (var i=0; i<extra_plugins.length; i++)
+			{
+				if (extra_plugins[i].config !== undefined)
+				{
+					config[extra_plugins[i].plugin] = extra_plugins[i].config;
+				}
+			}
+		}
+		
+		CKEDITOR.replace(el, config);
 	});
 }
 
