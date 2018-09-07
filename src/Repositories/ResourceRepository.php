@@ -4,28 +4,32 @@ use \Neonbug\Common\Models\Resource as Resource;
 
 class ResourceRepository {
 	
-	var $cached_slugs = null;
+	var $cached_slugs = []; // keys are language ids
 	
 	public function getSlugs($id_language, $table_name)
 	{
-		if ($this->cached_slugs == null)
+		if (!array_key_exists($id_language, $this->cached_slugs))
 		{
 			$resources = Resource::where('id_language', $id_language)
 				->where('column_name', 'slug')
 				->where('value', '!=', '')
 				->get();
-			$this->cached_slugs = array();
+			$this->cached_slugs[$id_language] = array();
 			foreach ($resources as $resource)
 			{
-				if (!array_key_exists($resource->table_name, $this->cached_slugs))
+				if (!array_key_exists($resource->table_name, $this->cached_slugs[$id_language]))
 				{
-					$this->cached_slugs[$resource->table_name] = array();
+					$this->cached_slugs[$id_language][$resource->table_name] = array();
 				}
-				$this->cached_slugs[$resource->table_name][] = $resource;
+				$this->cached_slugs[$id_language][$resource->table_name][] = $resource;
 			}
 		}
 		
-		return (array_key_exists($table_name, $this->cached_slugs) ? $this->cached_slugs[$table_name] : array());
+		return (
+			array_key_exists($table_name, $this->cached_slugs[$id_language]) ? 
+				$this->cached_slugs[$id_language][$table_name] : 
+				array()
+		);
 	}
 	
 	public function slugExists($table_name, $id_language, $value, $id_row = -1)
