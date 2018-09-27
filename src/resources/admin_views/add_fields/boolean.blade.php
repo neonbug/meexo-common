@@ -5,7 +5,7 @@
 	<td>
 		<div class="field">
 			<input type="hidden" name="field[{{ $id_language }}][{{ $field['name'] }}]" 
-				value="{{ ($field['value'] == true ? 'true' : 'false') }}"
+				value="{{ ($field['value'] == true ? '1' : '0') }}"
 				data-name="{{ $field['name'] }}" />
 
 			<div class="ui checkbox">

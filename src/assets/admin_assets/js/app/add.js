@@ -342,7 +342,7 @@
 	function initCheckboxes() {
 		$('.ui.checkbox').checkbox({
 			onChange: function() {
-				$('[name="' + this.dataset.name + '"]').val(this.checked ? 'true' : 'false');
+				$('[name="' + this.dataset.name + '"]').val(this.checked ? '1' : '0');
 			}
 		});
 	}

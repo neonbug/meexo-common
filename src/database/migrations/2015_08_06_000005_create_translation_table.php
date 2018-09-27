@@ -24,7 +24,7 @@ class CreateTranslationTable extends Migration {
 		{
 			$table->increments('id_translation');
 			$table->string('id_translation_source', 255);
-			$table->integer('id_language');
+			$table->integer('id_language')->unsigned();
 			$table->text('value');
 			$table->timestamps();
 			
