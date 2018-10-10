@@ -62,6 +62,13 @@ class AdminHelper {
 					{
 						$lang_dependent_fields[$id_language][$i]['value'] = $values[$id_language][$field['name']];
 					}
+					else if (array_key_exists($id_language, $values) && 
+						array_key_exists('save_to_field', $field) && 
+						$field['save_to_field'] != '' && 
+						array_key_exists($field['save_to_field'], $values[$id_language]))
+					{
+						$lang_dependent_fields[$id_language][$i]['value'] = $values[$id_language][$field['save_to_field']];
+					}
 				}
 			}
 		}
@@ -243,7 +250,13 @@ class AdminHelper {
 	{
 		$errors = []; //[ 'general' => 'DB error' ];
 		
-		$map = function($field) { return $field['name']; };
+		$map = function($field) {
+			if (array_key_exists('save_to_field', $field) && $field['save_to_field'] != '')
+			{
+				return $field['save_to_field'];
+			}
+			return $field['name'];
+		};
 		$allowed_lang_independent_fields = array_map($map, $language_independent_fields);
 		$allowed_lang_dependent_fields   = array_map($map, $language_dependent_fields);
 		
