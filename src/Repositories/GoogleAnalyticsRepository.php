@@ -126,6 +126,11 @@ class GoogleAnalyticsRepository {
 		);
 		
 		$rows = $results->getRows();
+		if ($rows === null)
+		{
+			$rows = [];
+		}
+		
 		$items = [];
 		foreach ($rows as $row)
 		{
