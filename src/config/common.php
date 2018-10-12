@@ -42,13 +42,17 @@ return [
 	| 'google_account'     => '36744352652-aekjq1eiq7q4ojqhpbfa8op8p0f7dmdu@developer.gserviceaccount.com', 
 	| 'google_certificate' => __DIR__ . '/../../resources/assets/analytics_key.p12', 
 	| 'default_profile_id' => '41764974'
+	| 
+	| When adding a new service account in Google Cloud Console, it doesn't need any permissions.
+	| 
+	| Afterwards, add a new user to your Google Analytics property with permission Read & Analyze.
 	|
 	*/
 	
 	'analytics' => [
-		'google_account'     => '', 
-		'google_certificate' => '', 
-		'default_profile_id' => ''
+		'google_account'     => env('GOOGLE_ANALYTICS_ACCOUNT', ''), 
+		'google_certificate' => __DIR__ . '/../../resources/assets/' . env('GOOGLE_ANALYTICS_CERTIFICATE_NAME', ''), 
+		'default_profile_id' => env('GOOGLE_ANALYTICS_DEFAULT_PROFILE_ID', '')
 	], 
 	
 ];
