@@ -21,23 +21,23 @@ class AdminHelper {
 	}
 	
 	public function prepareFieldsForAdd($languages, $language_dependent_fields_config, 
-		$language_independent_fields_config)
+		$language_independent_fields_config, $skip_resource_inflation = false)
 	{
 		return $this->prepareFieldsForAddEdit($languages, $language_dependent_fields_config, 
-			$language_independent_fields_config);
+			$language_independent_fields_config, null, $skip_resource_inflation);
 	}
 	
 	public function prepareFieldsForEdit($languages, $language_dependent_fields_config, 
-		$language_independent_fields_config, $item)
+		$language_independent_fields_config, $item, $skip_resource_inflation = false)
 	{
 		return $this->prepareFieldsForAddEdit($languages, $language_dependent_fields_config, 
-			$language_independent_fields_config, $item);
+			$language_independent_fields_config, $item, $skip_resource_inflation);
 	}
 	
 	private function prepareFieldsForAddEdit($languages, $language_dependent_fields_config, 
-		$language_independent_fields_config, $item = null)
+		$language_independent_fields_config, $item = null, $skip_resource_inflation = false)
 	{
-		$values = ($item == null ? [] : 
+		$values = ($item == null || $skip_resource_inflation ? [] : 
 			App::make('ResourceRepository')->getValues($item->getTableName(), $item->{$item->getKeyName()}));
 		
 		$lang_dependent_fields = [];
