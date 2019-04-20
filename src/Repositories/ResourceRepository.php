@@ -68,6 +68,7 @@ class ResourceRepository {
 			$column_names = array_merge($column_names, array_keys($fields));
 		}
 		$column_names = array_unique($column_names);
+		if (sizeof($column_names) == 0) return;
 		
 		$resources = Resource::where('table_name', $table_name)
 			->where('id_row', $id_row)
