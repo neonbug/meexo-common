@@ -21,6 +21,7 @@ class GoogleAnalyticsRepository {
 			
 			$client = new \Google_Client();
 			$client->setApplicationName("Meexo CMS");
+			$client->setCache(new \Google_Cache_Null($client));
 			$analytics = new \Google_Service_Analytics($client);
 			
 			$key = file_get_contents($key_file_location);
