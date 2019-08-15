@@ -29,35 +29,41 @@ return [
 	'list' => [
 		'fields' => [
 			'{{ 'id_' . str_replace('\\', '', snake_case($model_name)) }}' => [
-				'type' => 'text'
+				'type' => 'text', 
 			], 
 			'title' => [
-				'type' => 'text'
+				'type' => 'text', 
 			], 
 			'slug' => [
-				'type' => 'text', 
-				'important' => false
+				'type'      => 'text', 
+				'important' => false, 
 			], 
 			'updated_at' => [
-				'type' => 'date', 
-				'important' => false
-			]
+				'type'      => 'date', 
+				'important' => false, 
+			], 
 		]
 	], 
 	
 	'add' => [
 		'language_dependent_fields' => [
 			[
-				'name' => 'title', 
-				'type' => 'single_line_text', 
-				'value' => ''
+				'name'     => 'title', 
+				'type'     => 'single_line_text', 
+				'value'    => '', 
+				'required' => true, 
 			], 
 			[
-				'name' => 'slug', 
-				'type' => 'slug', 
+				'name'          => 'slug', 
+				'type'          => 'slug', 
+				'value'         => '', 
+				'generate_from' => 'title', 
+			], 
+			[
+				'name'  => 'meta_description', 
+				'type'  => 'meta_description', 
 				'value' => '', 
-				'generate_from' => 'title'
-			]
+			], 
 		], 
 		'language_independent_fields' => [
 		]
@@ -66,16 +72,22 @@ return [
 	'edit' => [
 		'language_dependent_fields' => [
 			[
-				'name' => 'title', 
-				'type' => 'single_line_text', 
-				'value' => ''
+				'name'     => 'title', 
+				'type'     => 'single_line_text', 
+				'value'    => '', 
+				'required' => true, 
 			], 
 			[
-				'name' => 'slug', 
-				'type' => 'slug', 
+				'name'          => 'slug', 
+				'type'          => 'slug', 
+				'value'         => '', 
+				'generate_from' => 'title', 
+			], 
+			[
+				'name'  => 'meta_description', 
+				'type'  => 'meta_description', 
 				'value' => '', 
-				'generate_from' => 'title'
-			]
+			], 
 		], 
 		'language_independent_fields' => [
 		]

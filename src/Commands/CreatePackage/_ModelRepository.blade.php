@@ -1,5 +1,8 @@
 namespace {{ $namespace }}\{{ $package_name }}\Repositories;
 
+use Neonbug\Common\Models\Language;
+use Neonbug\Common\Repositories\ResourceRepository;
+
 class {{ $model_name }}Repository {
 	
 	const CONFIG_PREFIX = '{{ $config_root }}.{{ $config_prefix }}';
@@ -7,9 +10,15 @@ class {{ $model_name }}Repository {
 	protected $latest_items_limit = 20;
 	protected $model;
 	
-	public function __construct()
+	protected $language;
+	protected $resource_repository;
+	
+	public function __construct(Language $language, ResourceRepository $resource_repository)
 	{
 		$this->model = config(static::CONFIG_PREFIX . '.model');
+		
+		$this->language            = $language;
+		$this->resource_repository = $resource_repository;
 	}
 	
 	public function getLatest()
@@ -24,6 +33,18 @@ class {{ $model_name }}Repository {
 	{
 		$model = $this->model;
 		return $model::all();
+	}
+	
+	public function getAll()
+	{
+		$model = $this->model;
+		
+		$items = $model::orderBy('updated_at', 'ASC')
+			->get();
+		
+		$this->resource_repository->inflateObjectsWithValues($items, $this->language->id_language);
+		
+		return $items;
 	}
 	
 }
