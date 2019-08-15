@@ -58,7 +58,7 @@ abstract class BaseAdminController extends \App\Http\Controllers\Controller {
 		return $this->adminAddPostHandle(
 			$is_preview, 
 			$item, 
-			Request::input('field'), //first level keys are language ids, second level are field names
+			Request::input('field', []), //first level keys are language ids, second level are field names
 			(Request::file('field') == null ? [] : Request::file('field')), //first level keys are language ids, second level are field names
 			Auth::user()->id_user, 
 			config($this->getConfigPrefix() . '.add.language_independent_fields'), 
@@ -95,7 +95,7 @@ abstract class BaseAdminController extends \App\Http\Controllers\Controller {
 	private function adminAddPreviewPost()
 	{
 		$retval = $this->admin_helper->handleAdminPreview(
-			Request::input('field'), //first level keys are language ids, second level are field names
+			Request::input('field', []), //first level keys are language ids, second level are field names
 			(Request::file('field') == null ? [] : Request::file('field')), //first level keys are language ids, second level are field names
 			Auth::user()->id_user, 
 			config($this->getConfigPrefix() . '.add.language_independent_fields'), 
@@ -134,7 +134,7 @@ abstract class BaseAdminController extends \App\Http\Controllers\Controller {
 		return $this->adminEditPostHandle(
 			$is_preview, 
 			$item, 
-			Request::input('field'), //first level keys are language ids, second level are field names
+			Request::input('field', []), //first level keys are language ids, second level are field names
 			(Request::file('field') == null ? [] : Request::file('field')), //first level keys are language ids, second level are field names
 			Auth::user()->id_user, 
 			config($this->getConfigPrefix() . '.add.language_independent_fields'), 
@@ -175,7 +175,7 @@ abstract class BaseAdminController extends \App\Http\Controllers\Controller {
 		$item = $model::findOrFail($id);
 		
 		$retval = $this->admin_helper->handleAdminPreview(
-			Request::input('field'), //first level keys are language ids, second level are field names
+			Request::input('field', []), //first level keys are language ids, second level are field names
 			(Request::file('field') == null ? [] : Request::file('field')), //first level keys are language ids, second level are field names
 			Auth::user()->id_user, 
 			config($this->getConfigPrefix() . '.add.language_independent_fields'), 
