@@ -20,7 +20,7 @@ class OrdEventHandler
 			foreach ($class_name::getOrdFields() as $field_name)
 			{
 				$new_value = $class_name::all()->max($field_name);
-				$new_value = ($new_value === null ? 1 : intval($new_value) + 10);
+				$new_value = ($new_value === null ? 10 : intval($new_value) + 10);
 				
 				foreach ($event->fields['language_independent'] as $idx=>$field)
 				{
