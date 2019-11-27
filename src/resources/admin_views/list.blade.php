@@ -19,6 +19,25 @@
 	
 	list.init(trans, config);
 	</script>
+	
+	<?php
+	$unique_types = [];
+	
+	foreach ($fields as $field_name=>$field) {
+		$type = (stripos($field['type'], '::') !== false ? $field['type'] : 
+			'common_admin::list_fields.' . $field['type']);
+		if (!in_array($type, $unique_types)) $unique_types[] = $type;
+	}
+	?>
+	
+	@foreach ($unique_types as $type)
+		@if (view()->exists($type . '--head'))
+			@include($type . '--head', [ 
+				'package_name' => $package_name, 
+				'route_prefix' => $route_prefix, 
+			])
+		@endif
+	@endforeach
 @stop
 
 @section('content')
