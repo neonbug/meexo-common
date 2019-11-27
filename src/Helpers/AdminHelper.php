@@ -439,7 +439,7 @@ class AdminHelper {
 				
 				if (file_exists('uploads/' . $directory . '/' . $filename))
 				{
-					unlink('uploads/' . $directory . '/' . $filename);
+					$filename = time() . '_' . $filename;
 				}
 				$file->move('uploads/' . $directory, $filename);
 				
