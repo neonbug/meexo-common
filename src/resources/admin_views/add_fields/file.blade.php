@@ -9,6 +9,10 @@
 	<td>
 		<div class="field">
 			<input type="file" name="field[{{ $id_language }}][{{ $field['name'] }}]" data-name="{{ $field['name'] }}" />
+			
+			@if (array_key_exists('note', $field) && $field['note'] != '')
+				<div><div class="ui pointing label">{{ trans($field['note']) }}</div></div>
+			@endif
 		</div>
 	</td>
 </tr>
