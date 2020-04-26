@@ -34,7 +34,7 @@
 	};
 	
 	var config = {
-		check_token_route: {!! json_encode(url() . '/check-token') !!}, 
+		check_token_route: {!! json_encode(url('') . '/check-token') !!}, 
 		login_route: {!! json_encode(route('admin-login')) !!}, 
 		token_route: {!! json_encode(route('admin-token')) !!}, 
 	};

@@ -176,10 +176,9 @@ class ServiceProvider extends \Neonbug\Common\Providers\BaseServiceProvider {
 		//== BINDS ==
 		//===========
 		$this->app->singleton('session', function($app) { return new \Neonbug\Common\Session\SessionManager($app); });
-		$this->app->singleton('Illuminate\Contracts\Debug\ExceptionHandler', '\Neonbug\Common\Exceptions\Handler');
 		$this->app->singleton('Illuminate\Session\Middleware\StartSession', '\Neonbug\Common\Session\Middleware\StartSession');
 		
-		$this->app->bindShared('url', function($app)
+		$this->app->singleton('url', function($app)
 		{
 			$routes = $app['router']->getRoutes();
 
