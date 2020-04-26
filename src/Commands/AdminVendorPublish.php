@@ -9,12 +9,14 @@ use Illuminate\Filesystem\Filesystem;
 
 class AdminVendorPublish extends \Illuminate\Foundation\Console\VendorPublishCommand {
 
-	/**
-	 * The console command name.
-	 *
-	 * @var string
-	 */
-	protected $name = 'vendor:publish-admin';
+    /**
+     * The console command signature.
+     *
+     * @var string
+     */
+    protected $signature = 'vendor:publish-admin {--force : Overwrite any existing files.}
+            {--provider= : The service provider that has assets you want to publish.}
+            {--tag=* : One or many tags that have assets you want to publish.}';
 
 	/**
 	 * The console command description.
@@ -41,28 +43,34 @@ class AdminVendorPublish extends \Illuminate\Foundation\Console\VendorPublishCom
 	 */
 	public function fire()
 	{
-		$paths = BaseServiceProvider::pathsToPublishAdmin(
-			$this->option('provider'), $this->option('tag')
-		);
+		$tags = $this->option('tag');
 
-		if (empty($paths))
-		{
-			return $this->comment("Nothing to publish.");
-		}
+		$tags = $tags ?: [null];
 
-		foreach ($paths as $from => $to)
-		{
-			if ($this->files->isFile($from))
+		foreach ($tags as $tag) {
+			$paths = BaseServiceProvider::pathsToPublishAdmin(
+				$this->option('provider'), $tag
+			);
+
+			if (empty($paths))
 			{
-				$this->publishFile($from, $to);
+				return $this->comment("Nothing to publish.");
 			}
-			elseif ($this->files->isDirectory($from))
+
+			foreach ($paths as $from => $to)
 			{
-				$this->publishDirectory($from, $to);
-			}
-			else
-			{
-				$this->error("Can't locate path: <{$from}>");
+				if ($this->files->isFile($from))
+				{
+					$this->publishFile($from, $to);
+				}
+				elseif ($this->files->isDirectory($from))
+				{
+					$this->publishDirectory($from, $to);
+				}
+				else
+				{
+					$this->error("Can't locate path: <{$from}>");
+				}
 			}
 		}
 

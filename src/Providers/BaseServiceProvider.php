@@ -77,13 +77,19 @@ abstract class BaseServiceProvider extends \Illuminate\Support\ServiceProvider {
 	 */
 	public static function pathsToPublishAdmin($provider = null, $group = null)
 	{
-		if ($group && array_key_exists($group, static::$publishGroupsAdmin))
-		{
+		if ($provider && $group) {
+			if (empty(static::$publishesAdmin[$provider]) || empty(static::$publishGroupsAdmin[$group])) {
+				return [];
+			}
+
+			return array_intersect(static::$publishesAdmin[$provider], static::$publishGroupsAdmin[$group]);
+		}
+
+		if ($group && array_key_exists($group, static::$publishGroupsAdmin)) {
 			return static::$publishGroupsAdmin[$group];
 		}
 
-		if ($provider && array_key_exists($provider, static::$publishesAdmin))
-		{
+		if ($provider && array_key_exists($provider, static::$publishesAdmin)) {
 			return static::$publishesAdmin[$provider];
 		}
 
