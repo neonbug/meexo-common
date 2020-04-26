@@ -41,7 +41,7 @@ class AdminVendorPublish extends \Illuminate\Foundation\Console\VendorPublishCom
 	 *
 	 * @return void
 	 */
-	public function fire()
+	public function handle()
 	{
 		$tags = $this->option('tag');
 

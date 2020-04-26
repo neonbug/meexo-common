@@ -46,7 +46,7 @@ class CreatePackage extends Command {
 	 *
 	 * @return void
 	 */
-	public function fire()
+	public function handle()
 	{
 		//gather information
 		$name = studly_case($this->argument('name'));

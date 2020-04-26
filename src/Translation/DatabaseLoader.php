@@ -2,7 +2,7 @@
 
 use Illuminate\Filesystem\Filesystem;
 
-class DatabaseLoader implements \Illuminate\Translation\LoaderInterface {
+class DatabaseLoader implements \Illuminate\Contracts\Translation\Loader {
 
 	/**
 	 * All of the namespace hints.
@@ -99,6 +99,17 @@ class DatabaseLoader implements \Illuminate\Translation\LoaderInterface {
 	public function addNamespace($namespace, $hint)
 	{
 		$this->hints[$namespace] = $hint;
+	}
+
+	/**
+	 * Add a new JSON path to the loader.
+	 *
+	 * @param  string  $path
+	 * @return void
+	 */
+	public function addJsonPath($path)
+	{
+		$this->jsonPaths[] = $path;
 	}
 
 	/**
