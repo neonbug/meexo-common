@@ -1,5 +1,7 @@
 <?php namespace Neonbug\Common\Models;
 
+use Illuminate\Support\Arr;
+
 class Translation extends BaseModel {
 
 	public static function getByLocaleAndGroupAndNamespace($locale, $group, $namespace = null)
@@ -20,7 +22,7 @@ class Translation extends BaseModel {
 		
 		$structured = [];
 		foreach ($arr as $key=>$value) {
-			array_set($structured, $key, $value);
+			Arr::set($structured, $key, $value);
 		}
 		
 		return $structured;

@@ -1,6 +1,7 @@
 <?php namespace Neonbug\Common\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 class BaseModel extends Model {
 	
@@ -37,7 +38,7 @@ class BaseModel extends Model {
 		if (isset($schema) && $schema != '') $schema_prefix = $schema . '.';
 		
 		if (isset($this->table)) 	$table = $this->table;
-		else 						$table = str_replace('\\', '', snake_case(class_basename($this)));
+		else 						$table = str_replace('\\', '', Str::snake(class_basename($this)));
 		
 		if (stripos($table, '.') !== false)
 			return $table;
@@ -69,7 +70,7 @@ class BaseModel extends Model {
 	{
 		if (isset($this->primaryKey)) return $this->primaryKey;
 		
-		return 'id_' . str_replace('\\', '', snake_case(class_basename($this)));
+		return 'id_' . str_replace('\\', '', Str::snake(class_basename($this)));
 	}
 	
 	public function getSlug()
