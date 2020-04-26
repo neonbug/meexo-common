@@ -54,7 +54,7 @@ class AdminHelper {
 					$field = $lang_dependent_fields[$id_language][$i];
 					
 					$event = new \Neonbug\Common\Events\AdminAddEditPrepareField('dependent', $field, $item, $id_language);
-					Event::fire($event);
+					Event::dispatch($event);
 					$lang_dependent_fields[$id_language][$i] = $event->field;
 					
 					if (array_key_exists($id_language, $values) && 
@@ -83,7 +83,7 @@ class AdminHelper {
 			$field = $fields['language_independent'][$i];
 			
 			$event = new \Neonbug\Common\Events\AdminAddEditPrepareField('independent', $field, $item);
-			Event::fire($event);
+			Event::dispatch($event);
 			$fields['language_independent'][$i] = $event->field;
 		}
 		
@@ -148,7 +148,7 @@ class AdminHelper {
 	public function deleteItem($id, $model, $primary_key)
 	{
 		$event = new \Neonbug\Common\Events\AdminBeforeDeleteItem($id, $model, $primary_key);
-		Event::fire($event);
+		Event::dispatch($event);
 		
 		$model::where($primary_key, $id)
 			->delete();
@@ -157,7 +157,7 @@ class AdminHelper {
 			->deleteValues(call_user_func($model . '::getTableName'), [ $id ]);
 		
 		$event = new \Neonbug\Common\Events\AdminAfterDeleteItem($id, $model, $primary_key);
-		Event::fire($event);
+		Event::dispatch($event);
 	}
 	
 	//rendering
@@ -193,7 +193,7 @@ class AdminHelper {
 		);
 		
 		$event = new \Neonbug\Common\Events\AdminAddPreparedFields($model_name, $fields, null);
-		Event::fire($event);
+		Event::dispatch($event);
 		$fields = $event->fields;
 		
 		$params = [
@@ -225,7 +225,7 @@ class AdminHelper {
 		);
 		
 		$event = new \Neonbug\Common\Events\AdminEditPreparedFields($model_name, $fields, $item);
-		Event::fire($event);
+		Event::dispatch($event);
 		$fields = $event->fields;
 		
 		$params = [
@@ -336,7 +336,7 @@ class AdminHelper {
 		
 		if ($event != null)
 		{
-			Event::fire($event);
+			Event::dispatch($event);
 			
 			$all_fields                      = $event->fields;
 			$allowed_lang_independent_fields = $event->language_independent_fields;
@@ -354,7 +354,7 @@ class AdminHelper {
 			$languages, 
 			(sizeof($errors) > 0)
 		);
-		Event::fire($event);
+		Event::dispatch($event);
 		
 		if (sizeof($errors) > 0)
 		{
@@ -381,7 +381,7 @@ class AdminHelper {
 		//TODO handle files
 		
 		$key = str_random(10);
-		Cache::remember($prefix . '::admin::preview::' . $key, 10, function() use ($fields, $id_user, $id_item, 
+		Cache::remember($prefix . '::admin::preview::' . $key, 10 * 60, function() use ($fields, $id_user, $id_item, 
 			$allowed_lang_independent_fields, $allowed_lang_dependent_fields) { 
 			return [
 				'id_item'                         => $id_item, 
