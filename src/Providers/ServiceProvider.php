@@ -18,10 +18,9 @@ class ServiceProvider extends \Neonbug\Common\Providers\BaseServiceProvider {
 	/**
 	 * Define your route model bindings, pattern filters, etc.
 	 *
-	 * @param  \Illuminate\Routing\Router  $router
 	 * @return void
 	 */
-	public function boot(Router $router)
+	public function boot()
 	{
 		//============
 		//== ASSETS ==
@@ -52,11 +51,11 @@ class ServiceProvider extends \Neonbug\Common\Providers\BaseServiceProvider {
 		$admin_language = App::make('AdminLanguage');
 		$admin_locale = ($admin_language == null ? Config::get('app.admin_default_locale') : $admin_language->locale);
 		
-		View::composer('common::admin', function($view) use ($router)
+		View::composer('common::admin', function($view)
 		{
 			$menu_items = [];
 			
-			$routes = $router->getRoutes();
+			$routes = Route::getRoutes();
 			foreach ($routes as $route)
 			{
 				if (stripos($route->getName(), '::admin::') !== false)
@@ -123,8 +122,8 @@ class ServiceProvider extends \Neonbug\Common\Providers\BaseServiceProvider {
 		view()->share('formatter', App::make('\Neonbug\Common\Helpers\FormatterHelper'));
 		
 		//admin
-		$router->get('admin', function() { return redirect(route('admin-home')); });
-		$router->group(['prefix' => $admin_locale . '/admin'], function($router)
+		Route::get('admin', function() { return redirect(route('admin-home')); });
+		Route::group(['prefix' => $admin_locale . '/admin'], function($router)
 		{
 			$auth_controller = '\Neonbug\Common\Http\Controllers\Auth\AuthController';
 			
@@ -140,7 +139,7 @@ class ServiceProvider extends \Neonbug\Common\Providers\BaseServiceProvider {
 			}]);
 		});
 		
-		$router->group(['prefix' => $admin_locale . '/admin', 'middleware' => ['auth.admin']], function($router)
+		Route::group(['prefix' => $admin_locale . '/admin', 'middleware' => ['auth.admin']], function($router)
 		{
 			$router->group(['role' => '*'], function($router) {
 				$router->get('/', ['as' => 'admin-home', 
@@ -158,7 +157,7 @@ class ServiceProvider extends \Neonbug\Common\Providers\BaseServiceProvider {
 		Event::subscribe('\Neonbug\Common\Handlers\Events\PasswordHashEventHandler');
 		Event::subscribe('\Neonbug\Common\Handlers\Events\SlugEventHandler');
 
-		parent::boot($router);
+		parent::boot();
 	}
 
 	/**
