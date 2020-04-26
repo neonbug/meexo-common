@@ -30,7 +30,7 @@ class StartSession extends \Illuminate\Session\Middleware\StartSession {
 		{
 			$session = $this->startSession($request);
 
-			$request->setSession($session);
+			$request->setLaravelSession($session);
 		}
 
 		$response = $next($request);

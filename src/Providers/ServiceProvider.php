@@ -61,7 +61,7 @@ class ServiceProvider extends \Neonbug\Common\Providers\BaseServiceProvider {
 				if (stripos($route->getName(), '::admin::') !== false)
 				{
 					if (!in_array('admin.menu', $route->middleware())) continue;
-					if (!in_array('GET', $route->getMethods())) continue; //only list routes for GET
+					if (!in_array('GET', $route->methods())) continue; //only list routes for GET
 					if (sizeof($route->parameterNames()) > 0) continue;
 					
 					//check for required role
