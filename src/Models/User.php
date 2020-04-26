@@ -2,11 +2,13 @@
 
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
+use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
+use Illuminate\Foundation\Auth\Access\Authorizable;
 use Neonbug\Common\Traits\PasswordTraitInterface as PasswordTraitInterface;
 
-class User extends BaseModel implements AuthenticatableContract, PasswordTraitInterface {
+class User extends BaseModel implements AuthenticatableContract, AuthorizableContract, PasswordTraitInterface {
 
-	use Authenticatable;
+	use Authenticatable, Authorizable;
 
 	/**
 	 * The database table used by the model.
