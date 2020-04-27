@@ -5,6 +5,7 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
 
 use Illuminate\Contracts\View\Factory;
+use Illuminate\Support\Str;
 use App;
 
 class CreatePackage extends Command {
@@ -49,7 +50,7 @@ class CreatePackage extends Command {
 	public function handle()
 	{
 		//gather information
-		$name = studly_case($this->argument('name'));
+		$name = Str::studly($this->argument('name'));
 		
 		$is_neonbug_package = 
 			($this->choice('What type of package is this? Enter 0 or 1 [0]', ['app', 'neonbug'], '0') == 'neonbug');
@@ -63,14 +64,14 @@ class CreatePackage extends Command {
 		$neonbug_package_path  = $neonbug_packages_path . $name . '/';
 		if (file_exists($package_path) || file_exists($neonbug_package_path)) exit('Package already exists');
 		
-		$snake_package_name = snake_case($name);
+		$snake_package_name = Str::snake($name);
 		$lowercase_snake_package_name = mb_strtolower($snake_package_name);
 		
 		$table_name    = $this->ask('Table name: [' .   $snake_package_name . ']', $snake_package_name);
 		$route_prefix  = $this->ask('Route prefix: [' . $snake_package_name . ']', $snake_package_name);
 		$config_prefix = $this->ask('Config name: [' .  $snake_package_name . ']', $snake_package_name);
 		
-		$model_name = studly_case($table_name);
+		$model_name = Str::studly($table_name);
 		
 		//check with user if this is it
 		$this->info('About to create a package:');

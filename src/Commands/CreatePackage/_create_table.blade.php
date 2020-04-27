@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Support\Str;
 
 class Create{{ $model_name }}Table extends Migration {
 
@@ -14,7 +15,7 @@ class Create{{ $model_name }}Table extends Migration {
 	{
 		Schema::create('{{ $table_name }}', function(Blueprint $table)
 		{
-			$table->increments('{{ 'id_' . str_replace('\\', '', snake_case($model_name)) }}');
+			$table->increments('{{ 'id_' . str_replace('\\', '', Str::snake($model_name)) }}');
 			//TODO add columns
 			$table->timestamps();
 		});

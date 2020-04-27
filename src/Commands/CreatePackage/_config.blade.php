@@ -1,3 +1,4 @@
+use Illuminate\Support\Str;
 
 return [
 	
@@ -28,7 +29,7 @@ return [
 	
 	'list' => [
 		'fields' => [
-			'{{ 'id_' . str_replace('\\', '', snake_case($model_name)) }}' => [
+			'{{ 'id_' . str_replace('\\', '', Str::snake($model_name)) }}' => [
 				'type' => 'text', 
 			], 
 			'title' => [
