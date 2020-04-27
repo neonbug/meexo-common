@@ -152,7 +152,7 @@ class CreatePackage extends Command {
 		$this->line(($step_idx++) . ') add translations in files ' . 
 			realpath($packages_path . $name . '/' . $trans_dir . 'admin.php') . ' and ' . 
 			realpath($packages_path . $name . '/' . $trans_dir . 'frontend.php') . ', ');
-		$this->line(($step_idx++) . ') add ' . $namespace . '\\' . $name . '\Providers\ServiceProvider to ' . 
+		$this->line(($step_idx++) . ') add ' . $namespace . '\\' . $name . '\Providers\ServiceProvider::class to ' . 
 			'$package_providers array in file /config/app.php, ');
 		
 		if ($is_neonbug_package)
@@ -162,7 +162,7 @@ class CreatePackage extends Command {
 			$this->line(($step_idx++) . ') run composer dump-autoload, ');
 		}
 		
-		$this->line(($step_idx++) . ') run php artisan vendor:publish and php artisan migrate.');
+		$this->line(($step_idx++) . ') run php artisan vendor:publish --all and php artisan migrate.');
 	}
 
 	/**
