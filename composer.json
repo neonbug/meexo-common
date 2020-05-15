@@ -8,7 +8,7 @@
 		"bkwld/croppa": "~4.0",
 		"flowjs/flow-php-server": "^1.0.3",
 		"google/apiclient": "^1.1",
-		"sendgrid/sendgrid": "~4.0"
+		"sendgrid/sendgrid": "^7.5.1"
 	},
 	"autoload": {
 		"psr-4": {
