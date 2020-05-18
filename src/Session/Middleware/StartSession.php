@@ -12,24 +12,21 @@ use Illuminate\Contracts\Routing\TerminableMiddleware;
 
 class StartSession extends \Illuminate\Session\Middleware\StartSession {
 
-	/**
-	 * Handle an incoming request.
+   /**
+	 * Handle the given request within session state.
 	 *
 	 * @param  \Illuminate\Http\Request  $request
+	 * @param  \Illuminate\Contracts\Session\Session  $session
 	 * @param  \Closure  $next
 	 * @return mixed
 	 */
-	public function handle($request, Closure $next)
+	protected function handleStatefulRequest(Request $request, $session, Closure $next)
 	{
-		if (! $this->sessionConfigured()) {
-			return $next($request);
-		}
-
 		// If a session driver has been configured, we will need to start the session here
 		// so that the data is ready for an application. Note that the Laravel sessions
 		// do not make use of PHP "native" sessions in any way since they are crappy.
 		$request->setLaravelSession(
-			$session = $this->startSession($request)
+			$this->startSession($request, $session)
 		);
 
 		$this->collectGarbage($session);
