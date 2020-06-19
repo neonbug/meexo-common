@@ -151,7 +151,7 @@ module.exports.init = function(trans, config) {
 		var token = $('meta[name="csrf_token"]').attr('content');
 
 		if (token) {
-			return xhr.setRequestHeader('X-XSRF-TOKEN', token);
+			return xhr.setRequestHeader('X-CSRF-TOKEN', token);
 		}
 	});
 	
