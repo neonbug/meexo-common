@@ -1,6 +1,7 @@
 <?php namespace Neonbug\Common\Helpers;
 
 use App;
+use Str;
 use Cache;
 use Request;
 use Event;
