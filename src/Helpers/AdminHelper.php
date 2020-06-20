@@ -380,7 +380,7 @@ class AdminHelper {
 		
 		//TODO handle files
 		
-		$key = str_random(10);
+		$key = Str::random(10);
 		Cache::remember($prefix . '::admin::preview::' . $key, 10 * 60, function() use ($fields, $id_user, $id_item, 
 			$allowed_lang_independent_fields, $allowed_lang_dependent_fields) { 
 			return [
