@@ -30,9 +30,9 @@
 					<div class="content">
 						<div class="header">{{ trans('common::admin.add.current-image-title') }}</div>
 					</div>
-					<a class="image" href="{!! Croppa::url_resize('uploads/' . $prefix . '/' . $field['value']) !!}" 
+					<a class="image" href="{!! CroppaExt::url_resize('uploads/' . $prefix . '/' . $field['value']) !!}" 
 						target="_blank">
-						<img src="{!! Croppa::url_resize('uploads/' . $prefix . '/' . $field['value'], 290) !!}" />
+						<img src="{!! CroppaExt::url_resize('uploads/' . $prefix . '/' . $field['value'], 290) !!}" />
 					</a>
 					<div class="content">
 						<div class="description">
