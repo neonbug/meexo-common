@@ -8,11 +8,11 @@
 	</th>
 	<td>
 		<div class="field">
-			<input type="text" value="{{ $formatter->formatShortDate(strtotime($field['value'])) }}" 
+			<input type="text" value="{{ $field['value'] === null || $field['value'] == '' ? '' : $formatter->formatShortDate(strtotime($field['value'])) }}" 
 				data-name="{{ $field['name'] }}" data-type="date" 
 				data-date-rel="field[{{ $id_language }}][{{ $field['name'] }}]" />
 			<input type="hidden" name="field[{{ $id_language }}][{{ $field['name'] }}]" 
-				value="{{ date('Y-m-d', strtotime($field['value'])) }}" />
+				value="{{ $field['value'] === null || $field['value'] == '' ? '' : date('Y-m-d', strtotime($field['value'])) }}" />
 		</div>
 	</td>
 </tr>
