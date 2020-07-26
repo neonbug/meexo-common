@@ -27,19 +27,20 @@ class VerifyCsrfToken extends Middleware {
 	 */
 	public function handle($request, Closure $next)
 	{
-		if ($this->isReading($request) || ($request->session()->has('_token') && $this->tokensMatch($request)))
-		{
-			$response = $next($request);
-			
-			if ($this->isReading($request) && $request->session()->has('_token'))
-			{
-				$response = $this->addCookieToResponse($request, $response);
-			}
-			
-			return $response;
+		if (
+			$this->isReading($request) ||
+			$this->runningUnitTests() ||
+			$this->inExceptArray($request) ||
+			($request->session()->has('_token') && $this->tokensMatch($request))
+		) {
+			return tap($next($request), function ($response) use ($request) {
+				if ($this->shouldAddXsrfTokenCookie() && $this->isReading($request) && $request->session()->has('_token')) {
+					$this->addCookieToResponse($request, $response);
+				}
+			});
 		}
 
-		//throw new TokenMismatchException;
+		//throw new TokenMismatchException('CSRF token mismatch.');
 		return Redirect::back()->withInput()->withErrors([ 'general' => 'Your session has expired' ]);
 	}
 
