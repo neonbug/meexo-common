@@ -18,6 +18,40 @@
 	};
 	
 	list.init(trans, config);
+	
+	@php
+		$col_count = sizeof(array_keys($fields));
+		if ($edit_route != null && Route::has($edit_route)) {
+			$col_count++;
+		}
+		if ($delete_route != null && Route::has($delete_route)) {
+			$col_count++;
+		}
+		if (Route::has($package_name . '::admin::save-item-order')) {
+			$col_count++;
+		}
+	@endphp
+	
+	@if (Route::has($package_name . '::admin::save-item-order'))
+		function reinitItemsSortable()
+		{
+			$('.items-table > tbody').sortable({
+				handle: '.items-order-handle',
+				forcePlaceholderSize: true,
+				placeholder: '<tr style="display: table-row;"><td colspan="{{ $col_count }}" style="background-color: #f2711c2b;"></td></tr>',
+				items: 'tr',
+			});
+			$('.items-table > tbody').on('sortupdate', function() {
+				$.post({!! json_encode(route($package_name . '::admin::save-item-order')) !!}, {
+					ids: $('.items-table > tbody > tr').toArray().map(item => item.dataset.idItem).join(','),
+				}, function(data) {});
+			});
+		}
+
+		$(document).ready(function() {
+			reinitItemsSortable();
+		});
+	@endif
 	</script>
 	
 	<?php
@@ -38,6 +72,12 @@
 			])
 		@endif
 	@endforeach
+	
+	<style type="text/css">
+	.ui.button.items-order-handle {
+		cursor: move;
+	}
+	</style>
 @stop
 
 @section('content')
@@ -47,7 +87,7 @@
 		</a>
 	@endif
 	
-	<table class="ui striped padded table unstackable">
+	<table class="ui striped padded table unstackable items-table">
 		<thead>
 			<tr>
 				@if ($edit_route != null && Route::has($edit_route))
@@ -63,11 +103,14 @@
 					?>
 					<th class="{{ $cls }}">{{ trans($package_name . '::admin.list.field-title.' . $field_name) }}</th>
 				@endforeach
+				@if (Route::has($package_name . '::admin::save-item-order'))
+					<th>{{ trans('common::admin.list.field-title.ord') }}</th>
+				@endif
 			</tr>
 		</thead>
 		<tbody>
 			@foreach ($items as $item)
-				<tr>
+				<tr data-id-item="{{ $item->{$item->getKeyName()} }}">
 					@if ($edit_route != null && Route::has($edit_route))
 						<td class="collapsing">
 							<a href="{{ route($edit_route, [ $item->{$item->getKeyName()} ]) }}" 
@@ -94,6 +137,11 @@
 									'route_prefix' => $route_prefix ])
 						</td>
 					@endforeach
+					@if (Route::has($package_name . '::admin::save-item-order'))
+						<td>
+							<button class="ui icon button items-order-handle" type="button" draggable="true">&#11137;</button>
+						</td>
+					@endif
 				</tr>
 			@endforeach
 		</tbody>

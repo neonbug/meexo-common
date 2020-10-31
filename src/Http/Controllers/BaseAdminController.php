@@ -213,4 +213,39 @@ abstract class BaseAdminController extends \App\Http\Controllers\Controller {
 		return [ 'valid' => $valid ];
 	}
 	
+	public function adminSaveItemOrderPost()
+	{
+		$model = $this->getModel();
+		$interfaces = class_implements($model);
+		if (!array_key_exists('Neonbug\Common\Traits\OrdTraitInterface', $interfaces)) return [ 'success' => false ];
+		
+		$ids = Request::input('ids');
+		if ($ids === null || $ids == '') {
+			return [ 'success' => false ];
+		}
+		
+		$ids = explode(',', $ids);
+		
+		$ord = 0;
+		foreach ($ids as $id) {
+			$item = $model::find($id);
+			if ($item === null) continue;
+			
+			$ord_fields = $model::getOrdFields();
+			if (!is_array($ord_fields) || sizeof($ord_fields) == 0) continue;
+			
+			$ord += 10;
+			foreach ($ord_fields as $ord_field) {
+				$item->$ord_field = $ord;
+			}
+			$item->save();
+			
+			Cache::forget($this->getPackageName() . '::item::' . $item->{$item->getKeyName()});
+		}
+		
+		Cache::forget($this->getPackageName() . '::items');
+		
+		return [ 'success' => true ];
+	}
+	
 }
