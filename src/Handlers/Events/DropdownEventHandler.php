@@ -139,8 +139,16 @@ class DropdownEventHandler
 							
 							if (array_key_exists($field['name'], $event->fields[$id_language]))
 							{
-								$event->fields[$id_language][$field['name']] = 
-									implode($separator, $event->fields[$id_language][$field['name']]);
+								$event->fields[$id_language][$field['name']] =
+									implode(
+										$separator,
+										array_filter(
+											$event->fields[$id_language][$field['name']],
+											function($x) {
+												return $x != '{ignore-placeholder}';
+											}
+										)
+									);
 							}
 						}
 					}

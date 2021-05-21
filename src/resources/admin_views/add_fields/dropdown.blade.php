@@ -17,6 +17,7 @@
 				$field_name .= '[]';
 			}
 			?>
+			<input type="hidden" name="{{ $field_name }}" value="{ignore-placeholder}" />
 			<select class="ui search dropdown" name="{{ $field_name }}"
 				{!! $multiple ? 'multiple=""' : '' !!}>
 				@if ((!array_key_exists('required', $field) || $field['required'] === false) && !$multiple)
