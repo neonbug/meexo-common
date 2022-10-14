@@ -283,7 +283,9 @@ class AdminHelper {
 			{
 				foreach ($fields[-1] as $field_name=>$field_value)
 				{
-					if ($field_value === '')
+					if ($field_name != $field['name']) continue;
+					
+					if ($field_value === '' && !$field['required'])
 					{
 						$fields[-1][$field_name] = null;
 					}
