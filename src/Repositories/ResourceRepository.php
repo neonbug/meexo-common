@@ -34,6 +34,8 @@ class ResourceRepository {
 	
 	public function slugExists($table_name, $id_language, $value, $id_row = -1)
 	{
+		if (!is_numeric($id_row)) return false;
+		
 		$query = Resource::where('id_language', $id_language)
 			->where('column_name', 'slug')
 			->where('value', $value)
@@ -62,6 +64,8 @@ class ResourceRepository {
 	*/
 	public function setValues($table_name, $id_row, Array $values)
 	{
+		if (!is_numeric($id_row)) return;
+		
 		$column_names = [];
 		foreach ($values as $id_language=>$fields)
 		{
@@ -109,6 +113,8 @@ class ResourceRepository {
 	//TODO maybe move these two functions somewhere else?
 	public function inflateObjectWithValues($obj, $id_language)
 	{
+		if (!is_numeric($obj->{$obj->getKeyName()})) return;
+		
 		$resources = Resource::where('table_name', $obj->getTableName())
 			->where('id_row', $obj->{$obj->getKeyName()})
 			->where('id_language', $id_language)
@@ -132,6 +138,8 @@ class ResourceRepository {
 		{
 			if ($table_name == null) $table_name = $objects[$i]->getTableName();
 			$id = $objects[$i]->{$objects[$i]->getKeyName()};
+			
+			if (!is_numeric($id)) continue;
 			
 			$ids[]          = $id;
 			$id_to_idx[$id] = $i;
@@ -171,6 +179,8 @@ class ResourceRepository {
 	 */
 	public function getValues($table_name, $id_row)
 	{
+		if (!is_numeric($id_row)) return [];
+		
 		$resources = Resource::where('table_name', $table_name)
 			->where('id_row', $id_row)
 			->get();
@@ -190,6 +200,10 @@ class ResourceRepository {
 	
 	public function deleteValues($table_name, Array $id_rows)
 	{
+		foreach ($id_rows as $id_row) {
+			if (!is_numeric($id_row)) return;
+		}
+		
 		Resource::where('table_name', $table_name)
 			->whereIn('id_row', $id_rows)
 			->delete();
