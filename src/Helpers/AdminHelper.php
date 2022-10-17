@@ -285,7 +285,7 @@ class AdminHelper {
 				{
 					if ($field_name != $field['name']) continue;
 					
-					if ($field_value === '' && !$field['required'])
+					if ($field_value === '' && !($field['required'] ?? false))
 					{
 						$fields[-1][$field_name] = null;
 					}
