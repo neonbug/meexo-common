@@ -93,8 +93,13 @@ class DropdownEventHandler
 					$field['multiple'] === true && 
 					array_key_exists('value', $field))
 				{
-					$separator = (array_key_exists('separator', $field) ? $field['separator'] : ';');
-					$event->fields['language_independent'][$i]['value'] = explode($separator, $field['value']);
+					if (is_array($field['value'])) {
+						$event->fields['language_independent'][$i]['value'] = $field['value'];
+					}
+					else {
+						$separator = (array_key_exists('separator', $field) ? $field['separator'] : ';');
+						$event->fields['language_independent'][$i]['value'] = explode($separator, $field['value']);
+					}
 				}
 			}
 			
@@ -107,8 +112,13 @@ class DropdownEventHandler
 						$field['multiple'] === true && 
 						array_key_exists('value', $field))
 					{
-						$separator = (array_key_exists('separator', $field) ? $field['separator'] : ';');
-						$event->fields['language_dependent'][$id_language][$i]['value'] = explode($separator, $field['value']);
+						if (is_array($field['value'])) {
+							$event->fields['language_dependent'][$id_language][$i]['value'] = $field['value'];
+						}
+						else {
+							$separator = (array_key_exists('separator', $field) ? $field['separator'] : ';');
+							$event->fields['language_dependent'][$id_language][$i]['value'] = explode($separator, $field['value']);
+						}
 					}
 				}
 			}
@@ -139,16 +149,18 @@ class DropdownEventHandler
 							
 							if (array_key_exists($field['name'], $event->fields[$id_language]))
 							{
-								$event->fields[$id_language][$field['name']] =
-									implode(
-										$separator,
-										array_filter(
-											$event->fields[$id_language][$field['name']],
-											function($x) {
-												return $x != '{ignore-placeholder}';
-											}
-										)
-									);
+								$arr = array_filter(
+									$event->fields[$id_language][$field['name']],
+									function($x) {
+										return $x != '{ignore-placeholder}';
+									}
+								);
+								if (($field['handle_as'] ?? null) == 'array') {
+									$event->fields[$id_language][$field['name']] = $arr;
+								}
+								else {
+									$event->fields[$id_language][$field['name']] = implode($separator, $arr);
+								}
 							}
 						}
 					}
