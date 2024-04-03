@@ -68,7 +68,7 @@ abstract class BaseAdminController extends \App\Http\Controllers\Controller {
 	}
 	
 	protected function adminAddPostHandle($is_preview, $item, $fields, $files, $id_user, $lang_independent_fields, 
-		$lang_dependent_fields, $route_prefix)
+		$lang_dependent_fields, $route_prefix, $route_postfix = 'add')
 	{
 		if ($is_preview)
 		{
@@ -84,7 +84,8 @@ abstract class BaseAdminController extends \App\Http\Controllers\Controller {
 			$route_prefix, 
 			$this->getModel(), 
 			$item, 
-			'add'
+			$route_postfix,
+			true
 		);
 		
 		Cache::forget($this->getPackageName() . '::items');
@@ -144,7 +145,7 @@ abstract class BaseAdminController extends \App\Http\Controllers\Controller {
 	}
 	
 	protected function adminEditPostHandle($is_preview, $item, $fields, $files, $id_user, $lang_independent_fields, 
-		$lang_dependent_fields, $route_prefix)
+		$lang_dependent_fields, $route_prefix, $route_postfix = 'edit')
 	{
 		if ($is_preview)
 		{
@@ -160,7 +161,8 @@ abstract class BaseAdminController extends \App\Http\Controllers\Controller {
 			$route_prefix, 
 			$this->getModel(), 
 			$item, 
-			'edit'
+			$route_postfix,
+			false
 		);
 		
 		Cache::forget($this->getPackageName() . '::item::' . $item->{$item->getKeyName()});

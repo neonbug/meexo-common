@@ -247,8 +247,11 @@ class AdminHelper {
 	
 	public function handleAdminAddEdit(Array $fields, Array $files, $id_user, 
 		Array $language_independent_fields, Array $language_dependent_fields, $prefix, $model_name, $item, 
-		$route_postfix)
+		$route_postfix, $is_add = null)
 	{
+		if ($is_add === null) {
+			$is_add = $route_postfix == 'add';
+		}
 		$errors = []; //[ 'general' => 'DB error' ];
 		
 		$map = function($field) {
@@ -310,7 +313,7 @@ class AdminHelper {
 		}
 		
 		$event = null;
-		if ($route_postfix == 'add')
+		if ($is_add)
 		{
 			$event = new \Neonbug\Common\Events\AdminAddSavePreparedFields(
 				$prefix, 
@@ -323,7 +326,7 @@ class AdminHelper {
 				$item
 			);
 		}
-		else if ($route_postfix == 'edit')
+		else
 		{
 			$event = new \Neonbug\Common\Events\AdminEditSavePreparedFields(
 				$prefix, 
@@ -362,11 +365,11 @@ class AdminHelper {
 		if (sizeof($errors) > 0)
 		{
 			return redirect(route($prefix . '::admin::' . $route_postfix, 
-				($route_postfix == 'add' ? [] : [ $item->{$item->getKeyName()} ])))
+				($is_add ? [] : [ $item->{$item->getKeyName()} ])))
 				->withErrors($errors);
 		}
 		return redirect(route($prefix . '::admin::' . $route_postfix, 
-			($route_postfix == 'add' ? [] : [ $item->{$item->getKeyName()} ])))
+			($is_add ? [] : [ $item->{$item->getKeyName()} ])))
 			->with([
 				'messages' => [ trans('common::admin.main.messages.saved') ]
 			]);
