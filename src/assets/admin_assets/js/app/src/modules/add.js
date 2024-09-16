@@ -300,7 +300,7 @@ function initDatePicker() {
 			firstDay: 1,
 			format: app_data.config.formatter_date_pattern, 
 			onSelect: function(date) {
-				$('[name="' + item.dataset.dateRel + '"]').val(moment(date).format('YYYY-MM-DD'));
+				$('[name="' + item.dataset.dateRel + '"]').val(moment(date).format('YYYY-MM-DD')).trigger('change');
 			}
 		});
 	});
