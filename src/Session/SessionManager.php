@@ -12,15 +12,16 @@ class SessionManager extends \Illuminate\Session\SessionManager {
 	 */
 	protected function buildSession($handler)
 	{
-		if ($this->app['config']['session.encrypt'])
+		$app = $this->getContainer();
+		if ($app['config']['session.encrypt'])
 		{
 			return new EncryptedStore(
-				$this->app['config']['session.cookie'], $handler, $this->app['encrypter']
+				$app['config']['session.cookie'], $handler, $app['encrypter']
 			);
 		}
 		else
 		{
-			return new Store($this->app['config']['session.cookie'], $handler);
+			return new Store($app['config']['session.cookie'], $handler);
 		}
 	}
 

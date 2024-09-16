@@ -253,6 +253,11 @@ class ServiceProvider extends \Neonbug\Common\Providers\BaseServiceProvider {
 				);
 			});
 		}
+
+		$temp_lang = new \Neonbug\Common\Models\Language([]);
+		$this->app->singleton('Neonbug\Common\Models\Language', function() use ($temp_lang) { return $temp_lang; });
+		$this->app->singleton('Language',                       function() use ($temp_lang) { return $temp_lang; });
+		$this->app->singleton('AdminLanguage',                  function() use ($temp_lang) { return $temp_lang; });
 		
 		include __DIR__ . '/../helpers.php';
 	}
