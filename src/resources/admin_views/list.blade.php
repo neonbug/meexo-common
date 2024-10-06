@@ -139,7 +139,7 @@
 					@endforeach
 					@if (Route::has($package_name . '::admin::save-item-order'))
 						<td>
-							<button class="ui icon button items-order-handle" type="button" draggable="true">&#11137;</button>
+							<button class="ui icon button items-order-handle" type="button" draggable="true">&#x21C5;</button>
 						</td>
 					@endif
 				</tr>
