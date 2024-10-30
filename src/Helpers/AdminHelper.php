@@ -358,7 +358,8 @@ class AdminHelper {
 			$language_independent_fields, 
 			$language_dependent_fields, 
 			$languages, 
-			(sizeof($errors) > 0)
+			(sizeof($errors) > 0),
+			$is_add
 		);
 		Event::dispatch($event);
 		

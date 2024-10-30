@@ -13,6 +13,7 @@ class AdminAddEditSavedItem extends Event {
 	public $language_dependent_fields;
 	public $languages;
 	public $is_error;
+	public $is_new;
 	
 	/**
 	 * Create a new event instance.
@@ -20,7 +21,7 @@ class AdminAddEditSavedItem extends Event {
 	 * @return void
 	 */
 	public function __construct($item, $fields, $language_independent_fields, 
-		$language_dependent_fields, $languages, $is_error)
+		$language_dependent_fields, $languages, $is_error, $is_new = null)
 	{
 		$this->item                        = $item;
 		$this->fields                      = $fields;
@@ -28,6 +29,7 @@ class AdminAddEditSavedItem extends Event {
 		$this->language_dependent_fields   = $language_dependent_fields;
 		$this->languages                   = $languages;
 		$this->is_error                    = $is_error;
+		$this->is_new                      = $is_new;
 	}
 	
 }
