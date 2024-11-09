@@ -256,7 +256,8 @@ function initRichEditors() {
 			filebrowserFlashBrowseUrl: file_browser_base_href + 'browse.php?opener=ckeditor&type=flash', 
 			filebrowserUploadUrl: file_browser_base_href + 'upload.php?opener=ckeditor&type=files', 
 			filebrowserImageUploadUrl: file_browser_base_href + 'upload.php?opener=ckeditor&type=images', 
-			filebrowserFlashUploadUrl: file_browser_base_href + 'upload.php?opener=ckeditor&type=flash'
+			filebrowserFlashUploadUrl: file_browser_base_href + 'upload.php?opener=ckeditor&type=flash',
+			height: el.dataset.height ?? 200,
 		};
 		
 		if (el.dataset.extraPlugins !== undefined && el.dataset.extraPlugins != '')

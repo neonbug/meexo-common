@@ -9,6 +9,7 @@
 				data-name="{{ $field['name'] }}"
 				data-type="rich_text"
 				data-extra-plugins="{{ array_key_exists('extra_plugins', $field) ? json_encode($field['extra_plugins']) : '' }}"
+				data-height="{{ $field['height'] ?? 200 }}"
 				>{{ $field['value'] }}</textarea>
 		</div>
 	</td>
