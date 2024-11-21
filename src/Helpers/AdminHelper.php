@@ -162,7 +162,7 @@ class AdminHelper {
 	}
 	
 	//rendering
-	public function adminList($package_name, Array $title, Array $fields, $prefix, $repo_class)
+	public function adminList($package_name, Array $title, Array $fields, $prefix, $repo_class, $top_routes = [])
 	{
 		$items = App::make('\Neonbug\Common\Helpers\AdminHelper')
 			->getListItems($repo_class);
@@ -175,7 +175,8 @@ class AdminHelper {
 			'add_route'    => $prefix . '::admin::add', 
 			'edit_route'   => $prefix . '::admin::edit', 
 			'delete_route' => $prefix . '::admin::delete', 
-			'route_prefix' => $prefix
+			'route_prefix' => $prefix,
+			'top_routes'   => $top_routes
 		];
 		
 		return App::make('\Neonbug\Common\Helpers\CommonHelper')

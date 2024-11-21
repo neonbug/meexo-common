@@ -87,6 +87,12 @@
 		</a>
 	@endif
 	
+	@foreach (($top_routes ?? []) as $top_route)
+		<a href="{{ $top_route['route'] }}" class="ui large label grey">
+			<i class="{{ $top_route['icon'] }}"></i> {{ $top_route['title'] }}
+		</a>
+	@endforeach
+
 	<table class="ui striped padded table unstackable items-table">
 		<thead>
 			<tr>
