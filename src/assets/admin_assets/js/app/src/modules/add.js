@@ -48,6 +48,7 @@ function updateSlug(slug_field, generate_from_field) {
 function checkSlug(slug_field) {
 	var value = slug_field.val();
 	var name = slug_field.attr('name');
+	var field_name = slug_field.data('name');
 	
 	if (current_ajax_requests[name] != undefined)
 	{
@@ -72,7 +73,8 @@ function checkSlug(slug_field) {
 		var post_data = {
 			value: value, 
 			id_language: slug_field.data('id-language'), 
-			id_item: app_data.config.id_item
+			id_item: app_data.config.id_item, 
+			name: field_name,
 		};
 		
 		current_ajax_requests[name] = $.post(app_data.config.check_slug_route, post_data, 

@@ -208,9 +208,9 @@ abstract class BaseAdminController extends \App\Http\Controllers\Controller {
 	{
 		$id_language = Request::input('id_language');
 		$value       = Request::input('value');
-		$id_item     = Request::input('id_item', -1);
+		$name        = Request::input('name', 'slug');
 		
-		$valid = !App::make('ResourceRepository')->slugExists($this->getRoutePrefix(), $id_language, $value, $id_item);
+		$valid = !App::make('ResourceRepository')->slugExists($this->getRoutePrefix(), $id_language, $value, $id_item, $name);
 		
 		return [ 'valid' => $valid ];
 	}

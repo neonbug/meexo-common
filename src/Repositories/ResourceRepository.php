@@ -32,12 +32,10 @@ class ResourceRepository {
 		);
 	}
 	
-	public function slugExists($table_name, $id_language, $value, $id_row = -1)
+	public function slugExists($table_name, $id_language, $value, $id_row = -1, $name = 'slug')
 	{
-		if (!is_numeric($id_row)) return false;
-		
 		$query = Resource::where('id_language', $id_language)
-			->where('column_name', 'slug')
+			->where('column_name', $name)
 			->where('value', $value)
 			->where('table_name', $table_name);
 		
